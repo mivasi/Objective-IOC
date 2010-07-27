@@ -33,7 +33,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 6C1D739411F21E8400F0EFC2 /* UnitTests */;
+			remoteGlobalIDString = 6C1D739411F21E8400F0EFC2;
 			remoteInfo = UnitTests;
 		};
 /* End PBXContainerItemProxy section */
@@ -109,7 +109,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6C1D73D711F2331700F0EFC2 /* ioc */,
+				6C1D73D711F2331700F0EFC2 /* IOC */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -207,7 +207,7 @@
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
-		6C1D73D711F2331700F0EFC2 /* ioc */ = {
+		6C1D73D711F2331700F0EFC2 /* IOC */ = {
 			isa = PBXGroup;
 			children = (
 				6C1D740011F2387600F0EFC2 /* MVIOCContainer.h */,
@@ -221,7 +221,7 @@
 				6C07A74811FDEB1500358364 /* MVIOCSingletonCache.h */,
 				6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */,
 			);
-			path = ioc;
+			path = IOC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
