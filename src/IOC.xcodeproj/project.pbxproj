@@ -7,30 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* IOCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* IOCAppDelegate.m */; };
-		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		6C05404B11FB330900FDFB3D /* IOCContainerGetComponentsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C05404A11FB330900FDFB3D /* IOCContainerGetComponentsTests.m */; };
 		6C0540C611FB4B5B00FDFB3D /* MVIOCProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0540C511FB4B5B00FDFB3D /* MVIOCProperty.m */; };
-		6C05410211FB539D00FDFB3D /* MVIOCProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0540C511FB4B5B00FDFB3D /* MVIOCProperty.m */; };
 		6C05420D11FC74D400FDFB3D /* MVIOCPropertyFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C05420C11FC74D400FDFB3D /* MVIOCPropertyFactory.m */; };
-		6C0543AD11FCABAE00FDFB3D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0543AC11FCABAE00FDFB3D /* UIKit.framework */; };
 		6C0544E611FD689200FDFB3D /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0544E511FD689200FDFB3D /* libOCMock.a */; };
 		6C07A74A11FDEB1500358364 /* MVIOCSingletonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */; };
 		6C07A75011FDF0F900358364 /* IOCSingletonCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07A74F11FDF0F900358364 /* IOCSingletonCacheTests.m */; };
+		6C07A88C11FEDE8300358364 /* MVIOCContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C1D740011F2387600F0EFC2 /* MVIOCContainer.h */; };
+		6C07A88D11FEDE8300358364 /* MVIOCProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C0540C411FB4B5B00FDFB3D /* MVIOCProperty.h */; };
+		6C07A88E11FEDE8300358364 /* MVIOCFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C05420A11FC748600FDFB3D /* MVIOCFactory.h */; };
+		6C07A88F11FEDE8300358364 /* MVIOCCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C07A70E11FDE55C00358364 /* MVIOCCache.h */; };
+		6C07A89011FEDE8300358364 /* MVIOCSingletonCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C07A74811FDEB1500358364 /* MVIOCSingletonCache.h */; };
+		6C07A89111FEDEB200358364 /* MVIOCContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1D740111F2387600F0EFC2 /* MVIOCContainer.m */; };
+		6C07A89211FEDEB200358364 /* MVIOCProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0540C511FB4B5B00FDFB3D /* MVIOCProperty.m */; };
+		6C07A89311FEDEB200358364 /* MVIOCPropertyFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C05420C11FC74D400FDFB3D /* MVIOCPropertyFactory.m */; };
+		6C07A89411FEDEB200358364 /* MVIOCSingletonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */; };
+		6C07A93A11FEDEC100358364 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		6C07A93B11FEDEC100358364 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0543AC11FCABAE00FDFB3D /* UIKit.framework */; };
 		6C1D73F411F237B800F0EFC2 /* IOCContainerAddComponentsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1D73F311F237B800F0EFC2 /* IOCContainerAddComponentsTests.m */; };
-		6C1D740511F238B300F0EFC2 /* MVIOCContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1D740111F2387600F0EFC2 /* MVIOCContainer.m */; };
 		6C1D741511F2390B00F0EFC2 /* MVIOCContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1D740111F2387600F0EFC2 /* MVIOCContainer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6C1D73E211F2344B00F0EFC2 /* PBXContainerItemProxy */ = {
+		6C07A94311FEDECF00358364 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 6C1D739411F21E8400F0EFC2;
+			remoteGlobalIDString = 6C1D739411F21E8400F0EFC2 /* UnitTests */;
 			remoteInfo = UnitTests;
 		};
 /* End PBXContainerItemProxy section */
@@ -50,11 +53,6 @@
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* IOCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOCAppDelegate.h; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* IOCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOCAppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* IOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* IOC_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOC_Prefix.pch; sourceTree = "<group>"; };
 		6C05404911FB330900FDFB3D /* IOCContainerGetComponentsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOCContainerGetComponentsTests.h; sourceTree = "<group>"; };
@@ -77,6 +75,7 @@
 		6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVIOCSingletonCache.m; sourceTree = "<group>"; };
 		6C07A74E11FDF0F900358364 /* IOCSingletonCacheTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOCSingletonCacheTests.h; sourceTree = "<group>"; };
 		6C07A74F11FDF0F900358364 /* IOCSingletonCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOCSingletonCacheTests.m; sourceTree = "<group>"; };
+		6C07A88211FEDDCA00358364 /* libIOC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIOC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C1D739511F21E8400F0EFC2 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C1D739611F21E8400F0EFC2 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		6C1D73F211F237B800F0EFC2 /* IOCContainerAddComponentsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOCContainerAddComponentsTests.h; sourceTree = "<group>"; };
@@ -87,13 +86,12 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+		6C07A88011FEDDCA00358364 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
-				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
-				6C0543AD11FCABAE00FDFB3D /* UIKit.framework in Frameworks */,
+				6C07A93A11FEDEC100358364 /* Foundation.framework in Frameworks */,
+				6C07A93B11FEDEC100358364 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,8 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				6C1D73D711F2331700F0EFC2 /* ioc */,
-				1D3623240D0F684500981E51 /* IOCAppDelegate.h */,
-				1D3623250D0F684500981E51 /* IOCAppDelegate.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -121,8 +117,8 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* IOC.app */,
 				6C1D739511F21E8400F0EFC2 /* UnitTests.octest */,
+				6C07A88211FEDDCA00358364 /* libIOC.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -154,7 +150,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* IOC-Info.plist */,
 			);
 			name = Resources;
@@ -164,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
-				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				6C0543AC11FCABAE00FDFB3D /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -232,24 +226,39 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		6C07A87E11FEDDCA00358364 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C07A88C11FEDE8300358364 /* MVIOCContainer.h in Headers */,
+				6C07A88D11FEDE8300358364 /* MVIOCProperty.h in Headers */,
+				6C07A88E11FEDE8300358364 /* MVIOCFactory.h in Headers */,
+				6C07A88F11FEDE8300358364 /* MVIOCCache.h in Headers */,
+				6C07A89011FEDE8300358364 /* MVIOCSingletonCache.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* IOC */ = {
+		6C07A88111FEDDCA00358364 /* IOC */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "IOC" */;
+			buildConfigurationList = 6C07A88611FEDDCD00358364 /* Build configuration list for PBXNativeTarget "IOC" */;
 			buildPhases = (
-				1D60588D0D05DD3D006BFB54 /* Resources */,
-				1D60588E0D05DD3D006BFB54 /* Sources */,
-				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				6C07A87E11FEDDCA00358364 /* Headers */,
+				6C07A87F11FEDDCA00358364 /* Sources */,
+				6C07A88011FEDDCA00358364 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6C1D73E311F2344B00F0EFC2 /* PBXTargetDependency */,
+				6C07A94411FEDECF00358364 /* PBXTargetDependency */,
 			);
 			name = IOC;
 			productName = IOC;
-			productReference = 1D6058910D05DD3D006BFB54 /* IOC.app */;
-			productType = "com.apple.product-type.application";
+			productReference = 6C07A88211FEDDCA00358364 /* libIOC.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 		6C1D739411F21E8400F0EFC2 /* UnitTests */ = {
 			isa = PBXNativeTarget;
@@ -282,21 +291,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* IOC */,
 				6C1D739411F21E8400F0EFC2 /* UnitTests */,
+				6C07A88111FEDDCA00358364 /* IOC */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1D60588D0D05DD3D006BFB54 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6C1D739011F21E8400F0EFC2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -323,14 +324,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+		6C07A87F11FEDDCA00358364 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				1D3623260D0F684500981E51 /* IOCAppDelegate.m in Sources */,
-				6C1D740511F238B300F0EFC2 /* MVIOCContainer.m in Sources */,
-				6C05410211FB539D00FDFB3D /* MVIOCProperty.m in Sources */,
+				6C07A89111FEDEB200358364 /* MVIOCContainer.m in Sources */,
+				6C07A89211FEDEB200358364 /* MVIOCProperty.m in Sources */,
+				6C07A89311FEDEB200358364 /* MVIOCPropertyFactory.m in Sources */,
+				6C07A89411FEDEB200358364 /* MVIOCSingletonCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,46 +352,40 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6C1D73E311F2344B00F0EFC2 /* PBXTargetDependency */ = {
+		6C07A94411FEDECF00358364 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6C1D739411F21E8400F0EFC2 /* UnitTests */;
-			targetProxy = 6C1D73E211F2344B00F0EFC2 /* PBXContainerItemProxy */;
+			targetProxy = 6C07A94311FEDECF00358364 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1D6058940D05DD3E006BFB54 /* Debug */ = {
+		6C07A88311FEDDCA00358364 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = IOC_Prefix.pch;
-				INFOPLIST_FILE = "IOC-Info.plist";
+				PREBINDING = NO;
 				PRODUCT_NAME = IOC;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
 			name = Debug;
 		};
-		1D6058950D05DD3E006BFB54 /* Release */ = {
+		6C07A88411FEDDCA00358364 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = IOC_Prefix.pch;
-				INFOPLIST_FILE = "IOC-Info.plist";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
 				PRODUCT_NAME = IOC;
-				VALIDATE_PRODUCT = YES;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -494,11 +489,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "IOC" */ = {
+		6C07A88611FEDDCD00358364 /* Build configuration list for PBXNativeTarget "IOC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1D6058940D05DD3E006BFB54 /* Debug */,
-				1D6058950D05DD3E006BFB54 /* Release */,
+				6C07A88311FEDDCA00358364 /* Debug */,
+				6C07A88411FEDDCA00358364 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
