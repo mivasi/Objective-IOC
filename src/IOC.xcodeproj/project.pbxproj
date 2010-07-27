@@ -24,6 +24,8 @@
 		6C07A89411FEDEB200358364 /* MVIOCSingletonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */; };
 		6C07A93A11FEDEC100358364 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		6C07A93B11FEDEC100358364 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0543AC11FCABAE00FDFB3D /* UIKit.framework */; };
+		6C07AA2211FF2B9F00358364 /* MVIOCPropertyFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C05420B11FC74D400FDFB3D /* MVIOCPropertyFactory.h */; };
+		6C07AA2311FF2BA400358364 /* MVIOC.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C07AA1F11FF2B1100358364 /* MVIOC.h */; };
 		6C1D73F411F237B800F0EFC2 /* IOCContainerAddComponentsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1D73F311F237B800F0EFC2 /* IOCContainerAddComponentsTests.m */; };
 		6C1D741511F2390B00F0EFC2 /* MVIOCContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1D740111F2387600F0EFC2 /* MVIOCContainer.m */; };
 /* End PBXBuildFile section */
@@ -37,19 +39,6 @@
 			remoteInfo = UnitTests;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6C05433611FCA9A900FDFB3D /* Copy OCMock */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "${BUILT_PRODUCTS_DIR}/";
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			name = "Copy OCMock";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -76,6 +65,7 @@
 		6C07A74E11FDF0F900358364 /* IOCSingletonCacheTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOCSingletonCacheTests.h; sourceTree = "<group>"; };
 		6C07A74F11FDF0F900358364 /* IOCSingletonCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOCSingletonCacheTests.m; sourceTree = "<group>"; };
 		6C07A88211FEDDCA00358364 /* libIOC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIOC.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C07AA1F11FF2B1100358364 /* MVIOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOC.h; sourceTree = "<group>"; };
 		6C1D739511F21E8400F0EFC2 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C1D739611F21E8400F0EFC2 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		6C1D73F211F237B800F0EFC2 /* IOCContainerAddComponentsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOCContainerAddComponentsTests.h; sourceTree = "<group>"; };
@@ -220,6 +210,7 @@
 				6C07A70E11FDE55C00358364 /* MVIOCCache.h */,
 				6C07A74811FDEB1500358364 /* MVIOCSingletonCache.h */,
 				6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */,
+				6C07AA1F11FF2B1100358364 /* MVIOC.h */,
 			);
 			path = IOC;
 			sourceTree = "<group>";
@@ -231,6 +222,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C07AA2311FF2BA400358364 /* MVIOC.h in Headers */,
+				6C07AA2211FF2B9F00358364 /* MVIOCPropertyFactory.h in Headers */,
 				6C07A88C11FEDE8300358364 /* MVIOCContainer.h in Headers */,
 				6C07A88D11FEDE8300358364 /* MVIOCProperty.h in Headers */,
 				6C07A88E11FEDE8300358364 /* MVIOCFactory.h in Headers */,
@@ -266,7 +259,6 @@
 			buildPhases = (
 				6C1D739011F21E8400F0EFC2 /* Resources */,
 				6C1D739111F21E8400F0EFC2 /* Sources */,
-				6C05433611FCA9A900FDFB3D /* Copy OCMock */,
 				6C1D739211F21E8400F0EFC2 /* Frameworks */,
 				6C1D739311F21E8400F0EFC2 /* ShellScript */,
 			);
