@@ -99,7 +99,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6C1D73D711F2331700F0EFC2 /* IOC */,
+				6C1D73D711F2331700F0EFC2 /* MVIOC */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -197,7 +197,7 @@
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
-		6C1D73D711F2331700F0EFC2 /* IOC */ = {
+		6C1D73D711F2331700F0EFC2 /* MVIOC */ = {
 			isa = PBXGroup;
 			children = (
 				6C1D740011F2387600F0EFC2 /* MVIOCContainer.h */,
@@ -212,7 +212,7 @@
 				6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */,
 				6C07AA1F11FF2B1100358364 /* MVIOC.h */,
 			);
-			path = IOC;
+			path = MVIOC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
