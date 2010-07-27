@@ -10,6 +10,7 @@
 #import "MVIOCProperty.h"
 #import "MVIOCFactory.h"
 #import "MVIOCPropertyFactory.h"
+#import "MVIOCCache.h"
 #import <objc/runtime.h>
 
 BOOL MVIOCContainerIsProtocol(id object) {
@@ -20,6 +21,7 @@ BOOL MVIOCContainerIsProtocol(id object) {
 
 @property(nonatomic, retain) NSMutableDictionary *components;
 @property(nonatomic, retain) NSMutableDictionary *componentsFactories;
+@property(nonatomic, retain) NSMutableDictionary *componentsCaches;
 
 @end
 
@@ -28,11 +30,13 @@ BOOL MVIOCContainerIsProtocol(id object) {
 
 @synthesize components = _components;
 @synthesize componentsFactories = _componentsFactories;
+@synthesize componentsCaches = _componentsCaches;
 
 - (id)init {
     if (self = [super init]) {
         self.components = [NSMutableDictionary dictionary];
         self.componentsFactories = [NSMutableDictionary dictionary];
+        self.componentsCaches = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -64,6 +68,10 @@ BOOL MVIOCContainerIsProtocol(id object) {
         [self.componentsFactories setObject:_withFactory forKey:key];
         _withFactory = nil;
     }
+    if (_withCache != nil) {
+        [self.componentsCaches setObject:_withCache forKey:key];
+        _withCache = nil;
+    }
 }
 
 - (id)getComponent:(id)component {
@@ -79,11 +87,27 @@ BOOL MVIOCContainerIsProtocol(id object) {
     
     Class componentClass = [self.components objectForKey:componentName];
     id<MVIOCFactory> componentFactory = [self.componentsFactories objectForKey:componentName];
+    
     if (componentFactory == nil) {
         componentFactory = self.factory;
     }
+
+    id<MVIOCCache> componentCache = [self.componentsCaches objectForKey:componentName];
     
-    return [componentFactory createInstanceFor:componentClass];
+    if (componentCache != nil) {
+        id cachedInstance = [componentCache getInstanceWithKey:componentName];
+        if (cachedInstance != nil) {
+            return cachedInstance;
+        }
+    }
+    
+    id instance = [componentFactory createInstanceFor:componentClass];
+    
+    if (componentCache != nil) {
+        [componentCache storeInstance:instance withKey:componentName];
+    }
+    
+    return instance;
 }
 
 #pragma mark Setup default container behaviour
@@ -110,6 +134,11 @@ BOOL MVIOCContainerIsProtocol(id object) {
     if ([_factory respondsToSelector:@selector(setContainer:)]) {
         [_factory setContainer:self];
     }
+    return self;
+}
+
+- (id)withCache:(id<MVIOCCache>)cache {
+    _withCache = cache;
     return self;
 }
 

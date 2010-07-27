@@ -9,6 +9,7 @@
 #import "IOCContainerGetComponentsTests.h"
 #import <OCMock/OCMock.h>
 #import "MVIOCFactory.h"
+#import "MVIOCCache.h"
 
 @class MVTestComposite;
 

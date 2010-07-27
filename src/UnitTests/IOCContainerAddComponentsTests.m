@@ -9,6 +9,7 @@
 #import "IOCContainerAddComponentsTests.h"
 #import "MVIOCPropertyFactory.h"
 #import "MVIOCContainer.h"
+#import "MVIOCCache.h"
 #import <OCMock/OCMock.h>
 
 @implementation IOCContainerAddComponentsTests
@@ -73,6 +74,33 @@
     [[defaultFactory expect] createInstanceFor:[MVIOCPropertyFactory class]];
     [self.container getComponent:[MVIOCPropertyFactory class]];
     [defaultFactory verify];
+}
+
+- (void)testAddComponentWithCachingStrategyWillStoreInstance {
+    id cache = [OCMockObject niceMockForProtocol:@protocol(MVIOCCache)];
+
+    [[self.container withCache:cache] addComponent:[IOCContainerAddComponentsTests class]];
+    
+    [[cache expect] storeInstance:[OCMArg any] withKey:@"IOCContainerAddComponentsTests"];
+    [self.container getComponent:[IOCContainerAddComponentsTests class]];
+    [cache verify];
+}
+
+- (void)testAddComponentWithCacheWillReturnInstanceFromCache {
+    NSException *exception = [NSException exceptionWithName:NSInternalInconsistencyException
+                                                     reason:@"Factory should not be called when object is cached"
+                                                   userInfo:nil];
+    
+    id factory = [OCMockObject niceMockForProtocol:@protocol(MVIOCFactory)];
+    [[[factory stub] andThrow:exception] createInstanceFor:[IOCContainerAddComponentsTests class]];
+    [self.container setFactory:factory];
+    
+    id cache = [OCMockObject niceMockForProtocol:@protocol(MVIOCCache)];
+    [[[cache stub] andReturn:self] getInstanceWithKey:@"IOCContainerAddComponentsTests"];
+    
+    [[self.container withCache:cache] addComponent:[IOCContainerAddComponentsTests class]];
+    
+    [self.container getComponent:[IOCContainerAddComponentsTests class]];
 }
 
 #endif

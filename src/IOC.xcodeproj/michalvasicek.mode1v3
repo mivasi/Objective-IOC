@@ -281,9 +281,21 @@
 									<integer>0</integer>
 								</array>
 								<array>
+									<integer>12</integer>
 									<integer>10</integer>
-									<integer>8</integer>
-									<integer>7</integer>
+									<integer>9</integer>
+									<integer>0</integer>
+								</array>
+								<array>
+									<integer>18</integer>
+									<integer>10</integer>
+									<integer>9</integer>
+									<integer>0</integer>
+								</array>
+								<array>
+									<integer>20</integer>
+									<integer>10</integer>
+									<integer>9</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -337,13 +349,12 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>6C07A70711FDD4D100358364</string>
+										<string>6C07A83F11FEC8D400358364</string>
 										<key>history</key>
 										<array>
 											<string>6CA744A311F397880045E5F7</string>
 											<string>6CA744A411F397880045E5F7</string>
 											<string>6C05402A11FB2E0100FDFB3D</string>
-											<string>6C05414C11FB7DF400FDFB3D</string>
 											<string>6C05417111FB7F0600FDFB3D</string>
 											<string>6C0541B511FB82AE00FDFB3D</string>
 											<string>6C0541D311FB853F00FDFB3D</string>
@@ -352,11 +363,18 @@
 											<string>6C05442D11FCC33300FDFB3D</string>
 											<string>6C07A6A611FDB93900358364</string>
 											<string>6C07A6A711FDB93900358364</string>
-											<string>6C07A6C311FDC3E900358364</string>
-											<string>6C07A6DF11FDC8A300358364</string>
-											<string>6C07A6E911FDC9F600358364</string>
 											<string>6C07A6F811FDCB7800358364</string>
-											<string>6C07A6FA11FDCB7800358364</string>
+											<string>6C07A72411FDE92900358364</string>
+											<string>6C07A7B111FE124100358364</string>
+											<string>6C07A7D311FE131600358364</string>
+											<string>6C07A80A11FEC2DD00358364</string>
+											<string>6C07A80C11FEC2DD00358364</string>
+											<string>6C07A81111FEC3E700358364</string>
+											<string>6C07A81211FEC3E700358364</string>
+											<string>6C07A82511FEC6B900358364</string>
+											<string>6C07A83911FEC8C200358364</string>
+											<string>6C07A83A11FEC8C200358364</string>
+											<string>6C07A83B11FEC8C200358364</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -554,6 +572,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>6C1D73A111F21EBE00F0EFC2</string>
 		<string>/Users/michalvasicek/Documents/workspaces/objectivec/IOC/src/IOC.xcodeproj</string>
 	</array>
@@ -579,7 +598,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>RunPlatformUnitTests.include</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -596,6 +615,8 @@
 							<string>511pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -919,7 +940,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>6C05410E11FB72C700FDFB3D</string>
+				<string>6C07A7CD11FE12DB00358364</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

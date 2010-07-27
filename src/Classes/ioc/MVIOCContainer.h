@@ -9,14 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @protocol MVIOCFactory;
+@protocol MVIOCCache;
 
 @interface MVIOCContainer : NSObject {
     id<MVIOCFactory> _factory;
 
     NSMutableDictionary *_components;    
     NSMutableDictionary *_componentsFactories;
+    NSMutableDictionary *_componentsCaches;
     
     id<MVIOCFactory> _withFactory;
+    id<MVIOCCache> _withCache;
 }
 
 @property(nonatomic, retain) id<MVIOCFactory> factory;
@@ -34,5 +37,6 @@
 
 #pragma mark Fluent setup methods for adding component
 - (id)withFactory:(id <MVIOCFactory>)factory;
+- (id)withCache:(id <MVIOCCache>)cache;
 
 @end
