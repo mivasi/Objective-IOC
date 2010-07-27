@@ -1,1 +1,3 @@
 .DS_Store
+src/IOC.xcodeproj/*.mode1v3
+src/IOC.xcodeproj/*.pbxuser
