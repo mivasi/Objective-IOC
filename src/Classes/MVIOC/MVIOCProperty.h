@@ -7,16 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <objc/runtime.h>
 
+@class MVIOCContainer;
 
 @interface MVIOCProperty : NSObject {
     NSString *_propertyName;
+    NSString *_variableName;
     id _propertyType;
+    BOOL _lazy;
+    
+    objc_property_t _objcProperty;
 }
 
 @property(readonly) NSString *name;
 @property(readonly) id type;
+@property(readonly) BOOL lazy;
+@property(readonly) NSString *variableName;
 
-- (id)initWithName:(NSString *)name type:(id)type;
-
+- (id)initWithObjCProperty:(objc_property_t)objcProperty;
 @end

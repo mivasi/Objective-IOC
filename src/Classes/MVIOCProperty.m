@@ -7,23 +7,49 @@
 //
 
 #import "MVIOCProperty.h"
+#import "MVIOCContainer.h"
 
 @implementation MVIOCProperty
 
 @synthesize name = _propertyName;
 @synthesize type = _propertyType;
+@synthesize lazy = _lazy;
+@synthesize variableName = _variableName;
 
-- (id)initWithName:(NSString *)name type:(id)type {
+- (id)initWithObjCProperty:(objc_property_t)objcProperty {
     if (self = [super init]) {
-        _propertyName = [name retain];
-        _propertyType = [type retain];
+        _objcProperty = objcProperty;
     }
+    
+    //T@"ClassToIntrospect",&,N,V_ctiProp
+    //T@"<ProtocolToTest>",C,D,N
+    NSString *propertyAttributes = [NSString stringWithCString:property_getAttributes(objcProperty) encoding:NSUTF8StringEncoding];
+    NSArray *attributes = [propertyAttributes componentsSeparatedByString:@","];
+    _propertyName = [[NSString stringWithCString:property_getName(objcProperty) encoding:NSUTF8StringEncoding] retain];
+    
+    NSString *variableTypePart = [attributes objectAtIndex:0];
+    if ([variableTypePart characterAtIndex:3] == '<') {
+        _propertyType = [[variableTypePart substringFromIndex:4] substringToIndex:([variableTypePart length] - 4 - 2)];
+    } else {
+        _propertyType = [[variableTypePart substringFromIndex:3] substringToIndex:([variableTypePart length] - 3 - 1)];
+    }
+    [_propertyType retain];
+    
+    if ([attributes count] > 2) {
+        if ([[attributes objectAtIndex:2] isEqual:@"D"]) {
+            _lazy = YES;
+        } else if ([attributes count] > 3) {
+            _variableName = [[[attributes objectAtIndex:3] substringFromIndex:1] retain];
+        }
+    }
+    
     return self;
 }
 
 - (void)dealloc {
     [_propertyName release]; _propertyName = nil;
     [_propertyType release]; _propertyType = nil;
+    [_variableName release]; _variableName = nil;
     [super dealloc];
 }
 

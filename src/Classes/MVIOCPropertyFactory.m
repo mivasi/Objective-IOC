@@ -11,6 +11,36 @@
 #import "MVIOCContainer.h"
 #import <objc/runtime.h>
 
+@class MVTestComposite;
+
+static NSString * const containerKey = @"container";
+static NSString * const cacheKey = @"cache";
+
+id MVIOCPropertyFactoryGetLazyComponent(id obj, SEL cmd) {
+    MVIOCContainer *container = objc_getAssociatedObject(obj, containerKey);
+    NSMutableDictionary *cache = objc_getAssociatedObject(obj, cacheKey);
+    if ([cache objectForKey:NSStringFromSelector(cmd)] != nil) {
+        return [cache objectForKey:NSStringFromSelector(cmd)];
+    }
+    objc_property_t objcProperty = class_getProperty([obj class], [NSStringFromSelector(cmd) cStringUsingEncoding:NSUTF8StringEncoding]);
+    
+    MVIOCProperty *property = [[MVIOCProperty alloc] initWithObjCProperty:objcProperty];
+    
+    id instance = [container getComponent:property.type];
+    if (instance != nil) {
+        [cache setObject:instance forKey:NSStringFromSelector(cmd)];        
+    }
+    
+    [property release];
+    
+    return instance;
+}
+
+void MVIOCPropertyFactoryTidyUp(id obj, SEL cmd) {
+    objc_setAssociatedObject(obj, cacheKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_msgSend(obj, @selector(originalDealloc));
+}
+
 @interface MVIOCPropertyFactory ()
 
 - (NSArray *)getClassPropertiesForInject:(Class)clazz;
@@ -27,7 +57,24 @@
     NSArray *dependencies = [self getClassPropertiesForInject:clazz];    
     
     for (MVIOCProperty *property in dependencies) {
-        [instance setValue:[_container getComponent:property.type] forKey:property.name];
+        if (property.lazy) {
+            if (![instance respondsToSelector:NSSelectorFromString(property.name)]) {
+                class_addMethod(clazz, NSSelectorFromString(property.name), (IMP) MVIOCPropertyFactoryGetLazyComponent, "@@:");                
+            }
+            
+            if (!objc_getAssociatedObject(instance, cacheKey)) {
+                objc_setAssociatedObject(instance, containerKey, _container, OBJC_ASSOCIATION_ASSIGN);
+                objc_setAssociatedObject(instance, cacheKey, [NSMutableDictionary dictionary], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            }
+            
+            if (![instance respondsToSelector:@selector(originalDealloc)]) {
+                IMP deallocImpl = class_getMethodImplementation(clazz, @selector(dealloc));
+                class_addMethod(clazz, @selector(originalDealloc), deallocImpl, "v");
+                class_replaceMethod(clazz, @selector(dealloc), (IMP)MVIOCPropertyFactoryTidyUp, "v@:");
+            }
+        } else {
+            [instance setValue:[_container getComponent:property.type] forKey:property.name];            
+        }
     }
     
     return instance;
@@ -43,34 +90,20 @@
     unsigned int propertiesCount;
     objc_property_t *properties = class_copyPropertyList(clazz, &propertiesCount);
     
-    NSMutableArray *propertiesAttributes = [NSMutableArray array];
-    for(int i = 0; i < propertiesCount; i++) {
-        NSString *propertyAttributes = [NSString stringWithCString:property_getAttributes(properties[i]) encoding:NSUTF8StringEncoding];
-        [propertiesAttributes addObject:propertyAttributes];
-    }
-    
     NSMutableArray *dependecies = [NSMutableArray array];
-    for (NSString *propertyAttributes in propertiesAttributes) {
-        //T@"ClassToIntrospect",&,N,V_ctiProp
-        NSArray *attributes = [propertyAttributes componentsSeparatedByString:@","];
-        if ([attributes count] == 4) {
-            NSString *variableName = [[attributes objectAtIndex:3] substringFromIndex:1];
-            if ([variableName hasPrefix:@"inj"]) {
-                NSString *variableTypePart = [attributes objectAtIndex:0];
-                NSString *variableType;
-                if ([variableTypePart characterAtIndex:3] == '<') {
-                    variableType = [[variableTypePart substringFromIndex:4] substringToIndex:([variableTypePart length] - 4 - 2)];
-                } else {
-                    variableType = [[variableTypePart substringFromIndex:3] substringToIndex:([variableTypePart length] - 3 - 1)];
-                }
-                MVIOCProperty *property = [[MVIOCProperty alloc] initWithName:variableName type:variableType];
-                [dependecies addObject:property];
-                [property release];
-            }
+
+    for(int i = 0; i < propertiesCount; i++) {
+        MVIOCProperty *property = [[MVIOCProperty alloc] initWithObjCProperty:properties[i]];
+        if(property.lazy) {
+            [dependecies addObject:property];
+            [property release];
+        } else if ([property.variableName hasPrefix:@"inj"]) {
+            [dependecies addObject:property];
+            [property release];                
         }
     }
+    
     return dependecies;
 }
-
 
 @end

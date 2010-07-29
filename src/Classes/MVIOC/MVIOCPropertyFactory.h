@@ -13,6 +13,7 @@
 
 @interface MVIOCPropertyFactory : NSObject <MVIOCFactory> {
     MVIOCContainer *_container;
+    
 }
 
 @end

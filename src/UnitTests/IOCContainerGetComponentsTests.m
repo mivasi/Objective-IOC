@@ -8,21 +8,10 @@
 
 #import "IOCContainerGetComponentsTests.h"
 #import <OCMock/OCMock.h>
+#import "TestClasses.h"
+
 #import "MVIOCFactory.h"
 #import "MVIOCCache.h"
-
-@class MVTestComposite;
-
-@interface MVTestCompositor : NSObject {
-    MVTestComposite *injComposite;
-}
-@property(nonatomic, retain) MVTestComposite *composite;
-@end
-
-@interface MVTestComposite : NSObject {
-    MVTestComposite *injComposite;
-}
-@end
 
 #pragma mark -
 #pragma mark TestSuite
@@ -62,15 +51,3 @@
 #endif
 
 @end
-
-#pragma mark -
-#pragma mark TestClasses implementations
-
-@implementation MVTestCompositor
-@synthesize composite = injComposite;
-@end
-
-@implementation MVTestComposite
-@end
-
-
