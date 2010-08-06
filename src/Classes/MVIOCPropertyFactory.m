@@ -15,10 +15,14 @@
 
 static NSString * const containerKey = @"container";
 static NSString * const cacheKey = @"cache";
+static NSString * const explicitDependeciesKey = @"explicitDependecies";
+
 
 id MVIOCPropertyFactoryGetLazyComponent(id obj, SEL cmd) {
     MVIOCContainer *container = objc_getAssociatedObject(obj, containerKey);
     NSMutableDictionary *cache = objc_getAssociatedObject(obj, cacheKey);
+    NSMutableDictionary *explicitDependecies = objc_getAssociatedObject(obj, explicitDependeciesKey);
+    
     if ([cache objectForKey:NSStringFromSelector(cmd)] != nil) {
         return [cache objectForKey:NSStringFromSelector(cmd)];
     }
@@ -26,7 +30,12 @@ id MVIOCPropertyFactoryGetLazyComponent(id obj, SEL cmd) {
     
     MVIOCProperty *property = [[MVIOCProperty alloc] initWithObjCProperty:objcProperty];
     
-    id instance = [container getComponent:property.type];
+    id componentKey = [explicitDependecies objectForKey:property.name];
+    if (componentKey == nil) {
+        componentKey = property.type;
+    }
+    
+    id instance = [container getComponent:componentKey];
     if (instance != nil) {
         [cache setObject:instance forKey:NSStringFromSelector(cmd)];        
     }
@@ -38,6 +47,7 @@ id MVIOCPropertyFactoryGetLazyComponent(id obj, SEL cmd) {
 
 void MVIOCPropertyFactoryTidyUp(id obj, SEL cmd) {
     objc_setAssociatedObject(obj, cacheKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(obj, explicitDependeciesKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     objc_msgSend(obj, @selector(originalDealloc));
 }
 
@@ -51,12 +61,18 @@ void MVIOCPropertyFactoryTidyUp(id obj, SEL cmd) {
 @implementation MVIOCPropertyFactory
 
 - (id)createInstanceFor:(Class)clazz {
+    return [self createInstanceFor:clazz withDeps:nil];
+}
+
+- (id)createInstanceFor:(Class)clazz withDeps:(id)deps {
+    NSMutableDictionary *depsDictionary = [(NSDictionary *)deps mutableCopy];
+    
     id instance = class_createInstance(clazz, 0);
     instance = [instance init];
     
-    NSArray *dependencies = [self getClassPropertiesForInject:clazz];    
+    NSArray *autoWiredDependencies = [self getClassPropertiesForInject:clazz];    
     
-    for (MVIOCProperty *property in dependencies) {
+    for (MVIOCProperty *property in autoWiredDependencies) {
         if (property.lazy) {
             if (![instance respondsToSelector:NSSelectorFromString(property.name)]) {
                 class_addMethod(clazz, NSSelectorFromString(property.name), (IMP) MVIOCPropertyFactoryGetLazyComponent, "@@:");                
@@ -67,18 +83,47 @@ void MVIOCPropertyFactoryTidyUp(id obj, SEL cmd) {
                 objc_setAssociatedObject(instance, cacheKey, [NSMutableDictionary dictionary], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             }
             
+            id extDep = [depsDictionary objectForKey:property.name];
+            if (extDep != nil) {
+                NSMutableDictionary *explicitDependeciesDictionary = objc_getAssociatedObject(instance, explicitDependeciesKey);
+                if (explicitDependeciesDictionary == nil) {
+                    explicitDependeciesDictionary = [NSMutableDictionary dictionary];
+                    objc_setAssociatedObject(instance, explicitDependeciesKey, explicitDependeciesDictionary, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                }
+                [explicitDependeciesDictionary setObject:extDep forKey:property.name];
+                [depsDictionary removeObjectForKey:property.name];
+            }
+            
             if (![instance respondsToSelector:@selector(originalDealloc)]) {
                 IMP deallocImpl = class_getMethodImplementation(clazz, @selector(dealloc));
                 class_addMethod(clazz, @selector(originalDealloc), deallocImpl, "v");
                 class_replaceMethod(clazz, @selector(dealloc), (IMP)MVIOCPropertyFactoryTidyUp, "v@:");
             }
         } else {
-            [instance setValue:[_container getComponent:property.type] forKey:property.name];            
+            id extDep = [depsDictionary objectForKey:property.name];
+            id componentKey;
+            if (extDep != nil) {
+                componentKey = [extDep copy];
+                [depsDictionary removeObjectForKey:property.name];
+            } else {
+                componentKey = [property.type copy];
+            }
+
+            [instance setValue:[_container getComponent:componentKey] forKey:property.name];
+            [componentKey release];
         }
     }
     
-    return instance;
+    for (NSString *propertyName in depsDictionary) {
+        id componentKey = [depsDictionary objectForKey:propertyName];
+        [instance setValue:[_container getComponent:componentKey] forKey:propertyName];
+    }
+    
+    [depsDictionary release];
+    
+    return instance;    
 }
+
 
 - (void)setContainer:(MVIOCContainer *)container {
     _container = container;

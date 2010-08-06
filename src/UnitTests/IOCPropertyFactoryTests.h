@@ -17,7 +17,7 @@
 
 #import "MVIOC.h"
 
-@interface IOCPropertyFactoryLazyComponentTests : SenTestCase {
+@interface IOCPropertyFactoryTests : SenTestCase {
     MVIOCPropertyFactory *_factory;
 }
 

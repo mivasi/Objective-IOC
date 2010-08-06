@@ -22,21 +22,23 @@ BOOL MVIOCContainerIsProtocol(id object) {
 @property(nonatomic, retain) NSMutableDictionary *components;
 @property(nonatomic, retain) NSMutableDictionary *componentsFactories;
 @property(nonatomic, retain) NSMutableDictionary *componentsCaches;
+@property(nonatomic, retain) NSMutableDictionary *componentsDeps;
 
 @end
-
 
 @implementation MVIOCContainer
 
 @synthesize components = _components;
 @synthesize componentsFactories = _componentsFactories;
 @synthesize componentsCaches = _componentsCaches;
+@synthesize componentsDeps = _componentsDeps;
 
 - (id)init {
     if (self = [super init]) {
         self.components = [NSMutableDictionary dictionary];
         self.componentsFactories = [NSMutableDictionary dictionary];
         self.componentsCaches = [NSMutableDictionary dictionary];
+        self.componentsDeps = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -44,6 +46,8 @@ BOOL MVIOCContainerIsProtocol(id object) {
 - (void)dealloc {
     self.components = nil;
     self.componentsFactories = nil;
+    self.componentsCaches = nil;
+    self.componentsDeps = nil;
     [_factory release]; _factory = nil;
     [super dealloc];
 }
@@ -71,6 +75,9 @@ BOOL MVIOCContainerIsProtocol(id object) {
     if (_withCache != nil) {
         [self.componentsCaches setObject:_withCache forKey:key];
         _withCache = nil;
+    }
+    if (_withDeps != nil) {
+        [self.componentsDeps setObject:_withDeps forKey:key];
     }
 }
 
@@ -101,7 +108,16 @@ BOOL MVIOCContainerIsProtocol(id object) {
         }
     }
     
-    id instance = [componentFactory createInstanceFor:componentClass];
+    
+    id instance;
+    
+    id deps = [self.componentsDeps objectForKey:componentName];    
+    if (deps != nil) {
+        instance = [componentFactory createInstanceFor:componentClass withDeps:deps];
+    } else {
+        instance = [componentFactory createInstanceFor:componentClass];        
+    }
+
     
     if (componentCache != nil) {
         [componentCache storeInstance:instance withKey:componentName];
@@ -139,6 +155,28 @@ BOOL MVIOCContainerIsProtocol(id object) {
 
 - (id)withCache:(id<MVIOCCache>)cache {
     _withCache = cache;
+    return self;
+}
+
+- (id)withDeps:(id)firstDep, ... {
+    NSMutableArray *deps = [NSMutableArray array];
+    id eachDep;
+    va_list argumentList;
+    if(firstDep) {
+        [deps addObject: firstDep];
+        va_start(argumentList, firstDep);
+        while (eachDep = va_arg(argumentList, id))
+            [deps addObject: eachDep];
+        va_end(argumentList);
+    }
+    
+    _withDeps = deps;
+    
+    return self;
+}
+
+- (id)withDepsDictionary:(NSDictionary *)dictionary {
+    _withDeps = dictionary;
     return self;
 }
 

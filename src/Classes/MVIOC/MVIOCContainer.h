@@ -18,9 +18,11 @@
     NSMutableDictionary *_componentsFactories;
     NSMutableDictionary *_componentsCaches;
     NSMutableDictionary *_componentsLazyLoads;
+    NSMutableDictionary *_componentsDeps;
     
     id<MVIOCFactory> _withFactory;
     id<MVIOCCache> _withCache;
+    id _withDeps;
 }
 
 @property(nonatomic, retain) id<MVIOCFactory> factory;
@@ -39,5 +41,8 @@
 #pragma mark Fluent setup methods for adding component
 - (id)withFactory:(id<MVIOCFactory>)factory;
 - (id)withCache:(id<MVIOCCache>)cache;
+
+- (id)withDeps:(id)firstDep, ...;
+- (id)withDepsDictionary:(NSDictionary *)dictionary;
 
 @end

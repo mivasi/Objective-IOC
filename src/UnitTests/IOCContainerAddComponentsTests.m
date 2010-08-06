@@ -11,6 +11,7 @@
 #import "MVIOCContainer.h"
 #import "MVIOCCache.h"
 #import <OCMock/OCMock.h>
+#import "TestClasses.h"
 
 @implementation IOCContainerAddComponentsTests
 
@@ -102,6 +103,47 @@
     
     [self.container getComponent:[IOCContainerAddComponentsTests class]];
 }
+
+- (void)testAddComponentWithExplicitDepsInVarg {
+    id factory = [OCMockObject niceMockForProtocol:@protocol(MVIOCFactory)];
+    [[factory expect] createInstanceFor:[MVTestProtocolCompositor class] withDeps:[OCMArg checkWithSelector:@selector(hasFactoryGetDepArgumentAsArray:) onObject:self]];
+    [self.container setFactory:factory];
+    [[self.container withDeps:[MVTestProtocolImplementation class], nil] addComponent:[MVTestProtocolCompositor class]];
+    [self.container getComponent:[MVTestProtocolCompositor class]];
+    [factory verify];
+}
+
+- (BOOL)hasFactoryGetDepArgumentAsArray:(NSArray *)arg {
+    if ([arg count] == 1) {
+        if ([[arg objectAtIndex:0] isEqual:[MVTestProtocolImplementation class]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void)testAddComponentWithExplicitDepsInDictionary {
+    id factory = [OCMockObject niceMockForProtocol:@protocol(MVIOCFactory)];
+    [[factory expect] createInstanceFor:[MVTestProtocolCompositor class] withDeps:[OCMArg checkWithSelector:@selector(hasFactoryGetDepArgumentAsDictionary:) onObject:self]];
+    
+    [self.container setFactory:factory];
+    
+    NSDictionary *deps = [NSDictionary dictionaryWithObjectsAndKeys:[MVTestProtocolImplementation class], @"composite", nil];
+    
+    [[self.container withDepsDictionary:deps] addComponent:[MVTestProtocolCompositor class]];
+    [self.container getComponent:[MVTestProtocolCompositor class]];
+    [factory verify];
+}
+
+- (BOOL)hasFactoryGetDepArgumentAsDictionary:(NSDictionary *)arg {
+    if ([arg count] == 1) {
+        if ([[arg objectForKey:@"composite"] isEqual:[MVTestProtocolImplementation class]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 
 #endif
 

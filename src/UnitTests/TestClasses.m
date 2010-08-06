@@ -11,6 +11,8 @@
 
 @implementation MVTestCompositor
 @synthesize composite = injComposite;
+@synthesize manualComposite;
+@dynamic lazyComposite;
 @end
 
 @implementation MVTestLazyCompositor 
@@ -18,12 +20,21 @@
 @dynamic composite;
 
 - (void)dealloc {
-    NSLog(@"dealloc");
     [super dealloc];
 }
 @end
 
 
 @implementation MVTestComposite
+
+@end
+
+@implementation MVTestProtocolImplementation
+
+@end
+
+@implementation MVTestProtocolCompositor
+
+@synthesize composite = injComposite;
 
 @end

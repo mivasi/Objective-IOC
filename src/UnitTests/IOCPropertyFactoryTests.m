@@ -6,13 +6,13 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "IOCPropertyFactoryLazyComponentTests.h"
+#import "IOCPropertyFactoryTests.h"
 #import <OCMock/OCMock.h>
 #import "TestClasses.h"
 
 #import <objc/runtime.h>
 
-@implementation IOCPropertyFactoryLazyComponentTests
+@implementation IOCPropertyFactoryTests
 
 @synthesize factory = _factory;
 
@@ -58,13 +58,29 @@
     
     MVTestLazyCompositor *lazyCompositor = [self.factory createInstanceFor:[MVTestLazyCompositor class]];
     [[[container stub] andReturn:self] getComponent:@"MVTestComposite"];
-    id c = lazyCompositor.composite;
+    lazyCompositor.composite;
     
     [[[container stub] andThrow:exception] getComponent:@"MVTestComposite"];
     lazyCompositor.composite;
     [container verify];
-    NSLog(@"%d", [c retainCount]);
+}
 
+- (void)testCreateComponentWithExplicitDeps {
+    id container = [OCMockObject mockForClass:[MVIOCContainer class]];
+    [[container expect] getComponent:[MVTestComposite class]];
+    [[container expect] getComponent:[MVTestProtocolImplementation class]];
+    [[container expect] getComponent:[MVTestProtocolImplementation class]];
+
+    [self.factory setContainer:container];
+    
+    NSDictionary *explicitDeps = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [MVTestProtocolImplementation class], @"lazyComposite",
+                                  [MVTestProtocolImplementation class], @"manualComposite", 
+                                  [MVTestComposite class], @"composite", nil];
+    
+    MVTestCompositor *component = [self.factory createInstanceFor:[MVTestCompositor class] withDeps:explicitDeps];
+    component.lazyComposite;
+    [container verify];    
 }
 
 #endif

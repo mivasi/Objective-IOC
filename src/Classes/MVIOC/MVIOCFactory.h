@@ -12,6 +12,7 @@
 @protocol MVIOCFactory <NSObject>
 
 - (id)createInstanceFor:(Class)clazz;
+- (id)createInstanceFor:(Class)clazz withDeps:(id)deps;
 
 @optional
 - (void)setContainer:(MVIOCContainer *)container;

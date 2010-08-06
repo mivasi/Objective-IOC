@@ -9,11 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @class MVTestComposite;
+@protocol MVTestProtocol;
 
 @interface MVTestCompositor : NSObject {
     MVTestComposite *injComposite;
+    id<MVTestProtocol> manualComposite;
 }
+
 @property(nonatomic, retain) MVTestComposite *composite;
+@property(nonatomic, retain) id<MVTestProtocol> manualComposite;
+@property(nonatomic, retain) id<MVTestProtocol> *lazyComposite;
+
 @end
 
 @interface MVTestLazyCompositor : NSObject {
@@ -24,6 +30,22 @@
 
 
 @interface MVTestComposite : NSObject {
-    MVTestComposite *injComposite;
+
 }
+@end
+
+@protocol MVTestProtocol <NSObject>
+
+@end
+
+@interface MVTestProtocolImplementation : NSObject <MVTestProtocol>
+
+@end
+
+@interface MVTestProtocolCompositor : NSObject {
+    id<MVTestProtocol> injComposite;
+}
+
+@property(nonatomic, retain) id<MVTestProtocol> composite;
+
 @end
