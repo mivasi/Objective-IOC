@@ -35,11 +35,11 @@
     }
     [_propertyType retain];
     
+    _variableName = [[[attributes lastObject] substringFromIndex:1] retain];
+    
     if ([attributes count] > 2) {
         if ([[attributes objectAtIndex:2] isEqual:@"D"]) {
             _lazy = YES;
-        } else if ([attributes count] > 3) {
-            _variableName = [[[attributes objectAtIndex:3] substringFromIndex:1] retain];
         }
     }
     

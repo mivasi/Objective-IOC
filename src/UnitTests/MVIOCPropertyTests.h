@@ -20,11 +20,14 @@
 @interface MVIOCPropertyTests : SenTestCase {
     SenTestCase *_classProperty;
     id <NSCoding> _protocolProperty;
+    SenTestCase *_assignAttrProperty;
 }
 
 @property(nonatomic, retain) SenTestCase *classProperty;
 @property(nonatomic, retain) id <NSCoding> protocolProperty;
 @property(nonatomic, retain) SenTestCase *lazyProperty;
+
+@property(nonatomic, assign) SenTestCase *assignAttrProperty;
 
 #if USE_APPLICATION_UNIT_TEST
 

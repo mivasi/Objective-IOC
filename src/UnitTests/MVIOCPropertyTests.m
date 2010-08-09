@@ -11,7 +11,10 @@
 
 @implementation MVIOCPropertyTests
 
-@synthesize classProperty = _classProperty, protocolProperty = _protocolProperty;
+@synthesize classProperty = _classProperty;
+@synthesize protocolProperty = _protocolProperty;
+@synthesize assignAttrProperty = _assignAttrProperty;
+
 @dynamic lazyProperty;
 
 #if USE_APPLICATION_UNIT_TEST     // all code under test is in the iPhone Application
@@ -46,7 +49,18 @@
     STAssertTrue(property.lazy, @"Property is not lazy");    
 }
 
-#endif
+- (void)testAssignProperty {
+    objc_property_t objcProperty = class_getProperty([self class], "assignAttrProperty");
+    
+    NSString *propertyAttributes = [NSString stringWithCString:property_getAttributes(objcProperty) encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", propertyAttributes);
+    
+    MVIOCProperty *property = [[[MVIOCProperty alloc] initWithObjCProperty:objcProperty] autorelease];
+    STAssertTrue([property.name isEqual:@"assignAttrProperty"], @"Property has bad name");
+    STAssertTrue([property.type isEqual:NSStringFromClass([SenTestCase class])], @"Property has bad type");
+    STAssertTrue([property.variableName isEqual:@"_assignAttrProperty"], @"Property has bad variable name");    
+}
 
+#endif
 
 @end
