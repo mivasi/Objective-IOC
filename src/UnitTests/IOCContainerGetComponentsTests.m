@@ -13,6 +13,8 @@
 #import "MVIOCFactory.h"
 #import "MVIOCCache.h"
 
+#import <objc/runtime.h>
+
 #pragma mark -
 #pragma mark TestSuite
 
@@ -46,6 +48,16 @@
     [[factory expect] createInstanceFor:[MVTestComposite class]];
     [self.container getComponent:[MVTestComposite class]];
     [factory verify];
+}
+
+- (void)testGetComponentAddedAsInstance {
+    [self.container addComponent:self];
+    STAssertTrue([self.container getComponent:[IOCContainerGetComponentsTests class]] == self, @"Bad component");
+}
+
+- (void)testGetComponentAddedAsInstanceWithAlias {
+    [self.container addComponent:self representing:@"MyTest"];
+    STAssertTrue([self.container getComponent:@"MyTest"] == self, @"Bad component");    
 }
 
 #endif

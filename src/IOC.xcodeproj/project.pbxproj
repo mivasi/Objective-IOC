@@ -33,16 +33,6 @@
 		6C3BEDDF1201D16500A3205F /* MVIOCPropertyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BEDDE1201D16500A3205F /* MVIOCPropertyTests.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		6C07A94311FEDECF00358364 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6C1D739411F21E8400F0EFC2;
-			remoteInfo = UnitTests;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -261,7 +251,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				6C07A94411FEDECF00358364 /* PBXTargetDependency */,
 			);
 			name = IOC;
 			productName = IOC;
@@ -360,14 +349,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		6C07A94411FEDECF00358364 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6C1D739411F21E8400F0EFC2 /* UnitTests */;
-			targetProxy = 6C07A94311FEDECF00358364 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6C07A88311FEDDCA00358364 /* Debug */ = {

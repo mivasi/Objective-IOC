@@ -144,6 +144,15 @@
     return NO;
 }
 
+- (void)testSetDefaultCacheStrategy {
+    id cache = [OCMockObject mockForProtocol:@protocol(MVIOCCache)];
+    [[[cache stub] andReturn:self] getInstanceWithKey:@"IOCContainerAddComponentsTests"];
+    self.container.cache = cache;
+    
+    [[self.container withCache] addComponent:[IOCContainerAddComponentsTests class]];
+    id instance = [self.container getComponent:@"IOCContainerAddComponentsTests"];
+    STAssertTrue(instance == self, @"Bad component");
+}
 
 #endif
 

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@protocol MVIOCCache
+@protocol MVIOCCache <NSObject>
 
 - (void)storeInstance:(id)instance withKey:(NSString *)key;
 - (id)getInstanceWithKey:(NSString *)key;
