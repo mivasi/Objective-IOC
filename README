@@ -1,2 +1,39 @@
-OBJECTIVE IOC
-Implementation of objective-c Inversion Of Control pattern
+Objective IOC
+=============
+
+Inversion Of Control for objective-c.
+
+How to add library into yout project
+====================================
+
+Objective IOC is compiled as a static library. So you can add it to your
+project as "dependent project".
+
+1. Clone project somewhere with git://github.com/mivasi/Objective-IOC.git
+
+2. Locate the "IOC.xcodeproj" file under "`src/`". Drag IOC.xcodeproj and
+   drop it onto the root of your Xcode project's "Groups and Files"  sidebar.  A dialog will
+   appear -- make sure "Copy items" is unchecked and "Reference Type" is "Relative to Project"
+   before clicking "Add".
+
+3. Now you need to link the MVIOC static libraries to your project.  Select IOC.xcodeproj that you just added to the sidebar.
+   Under the "Details" table, you will see libIOC.a and UnitTests.octest. Check the checkbox on the far right for each of
+   the libIOC.a file (not the UnitTests). This will link each part of the MVIOC framework to your app.
+
+4. Now you need to add MVIOC as a dependency of your project, so Xcode compiles it whenever
+   you compile your project.  Expand the "Targets" section of the sidebar and double-click your
+   application's target.  Under the "General" tab you will see a "Direct Dependencies" section. 
+   Click the "+" button, select "IOC" and click "Add Target". You do *not* need to add the `UnitTests` target for each lib.
+
+5. Finally, we need to tell your project where to find the MVIOC headers.  Open your
+   "Project Settings" and go to the "Build" tab. Look for "Header Search Paths" and double-click
+   it.  Add the relative path from your project's directory to the "src/Classes/" directory.
+
+6. While you are in Project Settings, go to "Other Linker Flags" under the "Linker" section, and
+   add "-ObjC" and "-all_load" to the list of flags.
+
+7. You're ready to go.  Just #import "MVIOC/MVIOC.h" anywhere you want to use MVIOC classes
+   in your project.
+   
+   
+Inspiration in this how-to from Three20 project
