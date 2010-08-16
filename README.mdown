@@ -3,7 +3,7 @@ Objective IOC
 
 Inversion Of Control for objective-c.
 
-How to add library into yout project
+How to add library into your project
 ====================================
 
 Objective IOC is compiled as a static library. So you can add it to your
