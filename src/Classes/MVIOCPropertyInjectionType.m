@@ -154,13 +154,12 @@ void MVIOCPropertyInjectionTypeTidyUp(id obj, SEL cmd) {
         MVIOCProperty *property = [[MVIOCProperty alloc] initWithObjCProperty:properties[i]];
         if(property.lazy) {
             [dependecies addObject:property];
-            [property release];
         } else if ([property.variableName hasPrefix:@"inj"]) {
             [dependecies addObject:property];
-            [property release];                
         }
+        [property release];
     }
-    
+    free(properties);
     return dependecies;
 }
 
