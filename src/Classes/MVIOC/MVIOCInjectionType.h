@@ -1,5 +1,5 @@
 //
-//  MVIOCFactory.h
+//  MVIOCInjectionType.h
 //  IOC
 //
 //  Created by Michal Vašíček on 7/25/10.
@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "MVIOCContainer.h"
 
-@protocol MVIOCFactory <NSObject>
+@protocol MVIOCInjectionType <NSObject>
 
-- (id)createInstanceFor:(Class)clazz;
-- (id)createInstanceFor:(Class)clazz withDeps:(id)deps;
+- (id)createInstanceFor:(Class)clazz withDeps:(id)deps initSelector:(SEL)initSelector initParams:(NSArray*)initParams;
 
 @optional
 - (void)setContainer:(MVIOCContainer *)container;

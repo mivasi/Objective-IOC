@@ -28,12 +28,14 @@
     _propertyName = [[NSString stringWithCString:property_getName(objcProperty) encoding:NSUTF8StringEncoding] retain];
     
     NSString *variableTypePart = [attributes objectAtIndex:0];
-    if ([variableTypePart characterAtIndex:3] == '<') {
-        _propertyType = [[variableTypePart substringFromIndex:4] substringToIndex:([variableTypePart length] - 4 - 2)];
-    } else {
-        _propertyType = [[variableTypePart substringFromIndex:3] substringToIndex:([variableTypePart length] - 3 - 1)];
+    if ([variableTypePart length] > 3) {
+        if ([variableTypePart characterAtIndex:3] == '<') {
+            _propertyType = [[variableTypePart substringFromIndex:4] substringToIndex:([variableTypePart length] - 4 - 2)];
+        } else {
+            _propertyType = [[variableTypePart substringFromIndex:3] substringToIndex:([variableTypePart length] - 3 - 1)];
+        }
+        [_propertyType retain];
     }
-    [_propertyType retain];
     
     _variableName = [[[attributes lastObject] substringFromIndex:1] retain];
     

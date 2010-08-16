@@ -10,7 +10,7 @@
 #import <OCMock/OCMock.h>
 #import "TestClasses.h"
 
-#import "MVIOCFactory.h"
+#import "MVIOCInjectionType.h"
 #import "MVIOCCache.h"
 
 #import <objc/runtime.h>
@@ -42,10 +42,14 @@
 }
 
 - (void)testGetComponentCreatedByFactory {
-    id factory = [OCMockObject niceMockForProtocol:@protocol(MVIOCFactory)];
-    [self.container setFactory:factory];
+    id factory = [OCMockObject niceMockForProtocol:@protocol(MVIOCInjectionType)];
+    [self.container setInjectionType:factory];
 
-    [[factory expect] createInstanceFor:[MVTestComposite class]];
+    [[factory expect] createInstanceFor:[MVTestComposite class]
+                               withDeps:nil
+                           initSelector:nil
+                             initParams:nil];
+    
     [self.container getComponent:[MVTestComposite class]];
     [factory verify];
 }

@@ -38,3 +38,16 @@
 @synthesize composite = injComposite;
 
 @end
+
+@implementation MVTestCustomInitClass
+
+@synthesize object = _object;
+
+- (id)initWithObject:(id)object {
+    if (self = [super init]) {
+        self.object = object;
+    }
+    return self;
+}
+
+@end

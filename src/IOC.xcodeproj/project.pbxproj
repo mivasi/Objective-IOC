@@ -9,28 +9,32 @@
 /* Begin PBXBuildFile section */
 		6C05404B11FB330900FDFB3D /* IOCContainerGetComponentsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C05404A11FB330900FDFB3D /* IOCContainerGetComponentsTests.m */; };
 		6C0540C611FB4B5B00FDFB3D /* MVIOCProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0540C511FB4B5B00FDFB3D /* MVIOCProperty.m */; };
-		6C05420D11FC74D400FDFB3D /* MVIOCPropertyFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C05420C11FC74D400FDFB3D /* MVIOCPropertyFactory.m */; };
+		6C05420D11FC74D400FDFB3D /* MVIOCPropertyInjectionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C05420C11FC74D400FDFB3D /* MVIOCPropertyInjectionType.m */; };
 		6C0544E611FD689200FDFB3D /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0544E511FD689200FDFB3D /* libOCMock.a */; };
 		6C07A74A11FDEB1500358364 /* MVIOCSingletonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */; };
 		6C07A75011FDF0F900358364 /* IOCSingletonCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07A74F11FDF0F900358364 /* IOCSingletonCacheTests.m */; };
 		6C07A88C11FEDE8300358364 /* MVIOCContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C1D740011F2387600F0EFC2 /* MVIOCContainer.h */; };
 		6C07A88D11FEDE8300358364 /* MVIOCProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C0540C411FB4B5B00FDFB3D /* MVIOCProperty.h */; };
-		6C07A88E11FEDE8300358364 /* MVIOCFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C05420A11FC748600FDFB3D /* MVIOCFactory.h */; };
+		6C07A88E11FEDE8300358364 /* MVIOCInjectionType.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C05420A11FC748600FDFB3D /* MVIOCInjectionType.h */; };
 		6C07A88F11FEDE8300358364 /* MVIOCCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C07A70E11FDE55C00358364 /* MVIOCCache.h */; };
 		6C07A89011FEDE8300358364 /* MVIOCSingletonCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C07A74811FDEB1500358364 /* MVIOCSingletonCache.h */; };
 		6C07A89111FEDEB200358364 /* MVIOCContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1D740111F2387600F0EFC2 /* MVIOCContainer.m */; };
 		6C07A89211FEDEB200358364 /* MVIOCProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0540C511FB4B5B00FDFB3D /* MVIOCProperty.m */; };
-		6C07A89311FEDEB200358364 /* MVIOCPropertyFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C05420C11FC74D400FDFB3D /* MVIOCPropertyFactory.m */; };
+		6C07A89311FEDEB200358364 /* MVIOCPropertyInjectionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C05420C11FC74D400FDFB3D /* MVIOCPropertyInjectionType.m */; };
 		6C07A89411FEDEB200358364 /* MVIOCSingletonCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */; };
 		6C07A93A11FEDEC100358364 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		6C07A93B11FEDEC100358364 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0543AC11FCABAE00FDFB3D /* UIKit.framework */; };
-		6C07AA2211FF2B9F00358364 /* MVIOCPropertyFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C05420B11FC74D400FDFB3D /* MVIOCPropertyFactory.h */; };
+		6C07AA2211FF2B9F00358364 /* MVIOCPropertyInjectionType.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C05420B11FC74D400FDFB3D /* MVIOCPropertyInjectionType.h */; };
 		6C07AA2311FF2BA400358364 /* MVIOC.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C07AA1F11FF2B1100358364 /* MVIOC.h */; };
-		6C07AA5311FF385900358364 /* IOCPropertyFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07AA5211FF385900358364 /* IOCPropertyFactoryTests.m */; };
+		6C07AA5311FF385900358364 /* IOCPropertyInjectionTypeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07AA5211FF385900358364 /* IOCPropertyInjectionTypeTests.m */; };
 		6C07AA8111FF3D7700358364 /* TestClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C07AA8011FF3D7700358364 /* TestClasses.m */; };
 		6C1D73F411F237B800F0EFC2 /* IOCContainerAddComponentsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1D73F311F237B800F0EFC2 /* IOCContainerAddComponentsTests.m */; };
 		6C1D741511F2390B00F0EFC2 /* MVIOCContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1D740111F2387600F0EFC2 /* MVIOCContainer.m */; };
 		6C3BEDDF1201D16500A3205F /* MVIOCPropertyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BEDDE1201D16500A3205F /* MVIOCPropertyTests.m */; };
+		6C5D41341215B6520062E4E1 /* IOCFactoryInjectionTypeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D41331215B6520062E4E1 /* IOCFactoryInjectionTypeTest.m */; };
+		6C5D41371215B6F10062E4E1 /* MVIOCFactoryInjectionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D41361215B6F10062E4E1 /* MVIOCFactoryInjectionType.m */; };
+		6C5D41391215B7100062E4E1 /* MVIOCFactoryInjectionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D41361215B6F10062E4E1 /* MVIOCFactoryInjectionType.m */; };
+		6C5D413B1215B7240062E4E1 /* MVIOCFactoryInjectionType.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C5D41351215B6F10062E4E1 /* MVIOCFactoryInjectionType.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,9 +45,9 @@
 		6C05404A11FB330900FDFB3D /* IOCContainerGetComponentsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOCContainerGetComponentsTests.m; sourceTree = "<group>"; };
 		6C0540C411FB4B5B00FDFB3D /* MVIOCProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCProperty.h; sourceTree = "<group>"; };
 		6C0540C511FB4B5B00FDFB3D /* MVIOCProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MVIOCProperty.m; path = ../MVIOCProperty.m; sourceTree = "<group>"; };
-		6C05420A11FC748600FDFB3D /* MVIOCFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCFactory.h; sourceTree = "<group>"; };
-		6C05420B11FC74D400FDFB3D /* MVIOCPropertyFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCPropertyFactory.h; sourceTree = "<group>"; };
-		6C05420C11FC74D400FDFB3D /* MVIOCPropertyFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MVIOCPropertyFactory.m; path = ../MVIOCPropertyFactory.m; sourceTree = "<group>"; };
+		6C05420A11FC748600FDFB3D /* MVIOCInjectionType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCInjectionType.h; sourceTree = "<group>"; };
+		6C05420B11FC74D400FDFB3D /* MVIOCPropertyInjectionType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCPropertyInjectionType.h; sourceTree = "<group>"; };
+		6C05420C11FC74D400FDFB3D /* MVIOCPropertyInjectionType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MVIOCPropertyInjectionType.m; path = Classes/MVIOCPropertyInjectionType.m; sourceTree = SOURCE_ROOT; };
 		6C0543AC11FCABAE00FDFB3D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6C0544DF11FD689200FDFB3D /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
 		6C0544E011FD689200FDFB3D /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
@@ -59,8 +63,8 @@
 		6C07A74F11FDF0F900358364 /* IOCSingletonCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOCSingletonCacheTests.m; sourceTree = "<group>"; };
 		6C07A88211FEDDCA00358364 /* libIOC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIOC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C07AA1F11FF2B1100358364 /* MVIOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOC.h; sourceTree = "<group>"; };
-		6C07AA5111FF385900358364 /* IOCPropertyFactoryTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOCPropertyFactoryTests.h; sourceTree = "<group>"; };
-		6C07AA5211FF385900358364 /* IOCPropertyFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOCPropertyFactoryTests.m; sourceTree = "<group>"; };
+		6C07AA5111FF385900358364 /* IOCPropertyInjectionTypeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOCPropertyInjectionTypeTests.h; sourceTree = "<group>"; };
+		6C07AA5211FF385900358364 /* IOCPropertyInjectionTypeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOCPropertyInjectionTypeTests.m; sourceTree = "<group>"; };
 		6C07AA7F11FF3D7700358364 /* TestClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestClasses.h; sourceTree = "<group>"; };
 		6C07AA8011FF3D7700358364 /* TestClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestClasses.m; sourceTree = "<group>"; };
 		6C1D739511F21E8400F0EFC2 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +75,10 @@
 		6C1D740111F2387600F0EFC2 /* MVIOCContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MVIOCContainer.m; path = ../MVIOCContainer.m; sourceTree = "<group>"; };
 		6C3BEDDD1201D16500A3205F /* MVIOCPropertyTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCPropertyTests.h; sourceTree = "<group>"; };
 		6C3BEDDE1201D16500A3205F /* MVIOCPropertyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVIOCPropertyTests.m; sourceTree = "<group>"; };
+		6C5D41321215B6520062E4E1 /* IOCFactoryInjectionTypeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOCFactoryInjectionTypeTest.h; sourceTree = "<group>"; };
+		6C5D41331215B6520062E4E1 /* IOCFactoryInjectionTypeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOCFactoryInjectionTypeTest.m; sourceTree = "<group>"; };
+		6C5D41351215B6F10062E4E1 /* MVIOCFactoryInjectionType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCFactoryInjectionType.h; sourceTree = "<group>"; };
+		6C5D41361215B6F10062E4E1 /* MVIOCFactoryInjectionType.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = MVIOCFactoryInjectionType.m; path = ../MVIOCFactoryInjectionType.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* IOC-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IOC-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,12 +200,14 @@
 				6C05404A11FB330900FDFB3D /* IOCContainerGetComponentsTests.m */,
 				6C07A74E11FDF0F900358364 /* IOCSingletonCacheTests.h */,
 				6C07A74F11FDF0F900358364 /* IOCSingletonCacheTests.m */,
-				6C07AA5111FF385900358364 /* IOCPropertyFactoryTests.h */,
-				6C07AA5211FF385900358364 /* IOCPropertyFactoryTests.m */,
+				6C07AA5111FF385900358364 /* IOCPropertyInjectionTypeTests.h */,
+				6C07AA5211FF385900358364 /* IOCPropertyInjectionTypeTests.m */,
 				6C07AA7F11FF3D7700358364 /* TestClasses.h */,
 				6C07AA8011FF3D7700358364 /* TestClasses.m */,
 				6C3BEDDD1201D16500A3205F /* MVIOCPropertyTests.h */,
 				6C3BEDDE1201D16500A3205F /* MVIOCPropertyTests.m */,
+				6C5D41321215B6520062E4E1 /* IOCFactoryInjectionTypeTest.h */,
+				6C5D41331215B6520062E4E1 /* IOCFactoryInjectionTypeTest.m */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -209,13 +219,15 @@
 				6C1D740111F2387600F0EFC2 /* MVIOCContainer.m */,
 				6C0540C411FB4B5B00FDFB3D /* MVIOCProperty.h */,
 				6C0540C511FB4B5B00FDFB3D /* MVIOCProperty.m */,
-				6C05420A11FC748600FDFB3D /* MVIOCFactory.h */,
-				6C05420B11FC74D400FDFB3D /* MVIOCPropertyFactory.h */,
-				6C05420C11FC74D400FDFB3D /* MVIOCPropertyFactory.m */,
+				6C05420A11FC748600FDFB3D /* MVIOCInjectionType.h */,
+				6C05420B11FC74D400FDFB3D /* MVIOCPropertyInjectionType.h */,
+				6C05420C11FC74D400FDFB3D /* MVIOCPropertyInjectionType.m */,
 				6C07A70E11FDE55C00358364 /* MVIOCCache.h */,
 				6C07A74811FDEB1500358364 /* MVIOCSingletonCache.h */,
 				6C07A74911FDEB1500358364 /* MVIOCSingletonCache.m */,
 				6C07AA1F11FF2B1100358364 /* MVIOC.h */,
+				6C5D41351215B6F10062E4E1 /* MVIOCFactoryInjectionType.h */,
+				6C5D41361215B6F10062E4E1 /* MVIOCFactoryInjectionType.m */,
 			);
 			path = MVIOC;
 			sourceTree = "<group>";
@@ -228,12 +240,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C07AA2311FF2BA400358364 /* MVIOC.h in Headers */,
-				6C07AA2211FF2B9F00358364 /* MVIOCPropertyFactory.h in Headers */,
+				6C07AA2211FF2B9F00358364 /* MVIOCPropertyInjectionType.h in Headers */,
 				6C07A88C11FEDE8300358364 /* MVIOCContainer.h in Headers */,
 				6C07A88D11FEDE8300358364 /* MVIOCProperty.h in Headers */,
-				6C07A88E11FEDE8300358364 /* MVIOCFactory.h in Headers */,
+				6C07A88E11FEDE8300358364 /* MVIOCInjectionType.h in Headers */,
 				6C07A88F11FEDE8300358364 /* MVIOCCache.h in Headers */,
 				6C07A89011FEDE8300358364 /* MVIOCSingletonCache.h in Headers */,
+				6C5D413B1215B7240062E4E1 /* MVIOCFactoryInjectionType.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,8 +339,9 @@
 			files = (
 				6C07A89111FEDEB200358364 /* MVIOCContainer.m in Sources */,
 				6C07A89211FEDEB200358364 /* MVIOCProperty.m in Sources */,
-				6C07A89311FEDEB200358364 /* MVIOCPropertyFactory.m in Sources */,
+				6C07A89311FEDEB200358364 /* MVIOCPropertyInjectionType.m in Sources */,
 				6C07A89411FEDEB200358364 /* MVIOCSingletonCache.m in Sources */,
+				6C5D41391215B7100062E4E1 /* MVIOCFactoryInjectionType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,12 +353,14 @@
 				6C1D741511F2390B00F0EFC2 /* MVIOCContainer.m in Sources */,
 				6C05404B11FB330900FDFB3D /* IOCContainerGetComponentsTests.m in Sources */,
 				6C0540C611FB4B5B00FDFB3D /* MVIOCProperty.m in Sources */,
-				6C05420D11FC74D400FDFB3D /* MVIOCPropertyFactory.m in Sources */,
+				6C05420D11FC74D400FDFB3D /* MVIOCPropertyInjectionType.m in Sources */,
 				6C07A74A11FDEB1500358364 /* MVIOCSingletonCache.m in Sources */,
 				6C07A75011FDF0F900358364 /* IOCSingletonCacheTests.m in Sources */,
-				6C07AA5311FF385900358364 /* IOCPropertyFactoryTests.m in Sources */,
+				6C07AA5311FF385900358364 /* IOCPropertyInjectionTypeTests.m in Sources */,
 				6C07AA8111FF3D7700358364 /* TestClasses.m in Sources */,
 				6C3BEDDF1201D16500A3205F /* MVIOCPropertyTests.m in Sources */,
+				6C5D41341215B6520062E4E1 /* IOCFactoryInjectionTypeTest.m in Sources */,
+				6C5D41371215B6F10062E4E1 /* MVIOCFactoryInjectionType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

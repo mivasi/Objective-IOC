@@ -10,8 +10,8 @@
 #import "MVIOCContainer.h"
 #import "MVIOCProperty.h"
 
-#import "MVIOCFactory.h"
-#import "MVIOCPropertyFactory.h"
+#import "MVIOCInjectionType.h"
+#import "MVIOCPropertyInjectionType.h"
 
 #import "MVIOCCache.h"
 #import "MVIOCSingletonCache.h"

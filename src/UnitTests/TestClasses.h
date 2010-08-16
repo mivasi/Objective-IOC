@@ -49,3 +49,13 @@
 @property(nonatomic, retain) id<MVTestProtocol> composite;
 
 @end
+
+@interface MVTestCustomInitClass : NSObject {
+    id _object;
+}
+
+@property(nonatomic, retain) id object;
+
+- (id)initWithObject:(id)object;
+
+@end

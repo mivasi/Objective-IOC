@@ -1,12 +1,12 @@
 //
-//  MVIOCPropertyFactory.m
+//  MVIOCPropertyInjectionType.m
 //  IOC
 //
 //  Created by Michal Vašíček on 7/25/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "MVIOCPropertyFactory.h"
+#import "MVIOCPropertyInjectionType.h"
 #import "MVIOCProperty.h"
 #import "MVIOCContainer.h"
 #import <objc/runtime.h>
@@ -18,7 +18,7 @@ static NSString * const cacheKey = @"cache";
 static NSString * const explicitDependeciesKey = @"explicitDependecies";
 
 
-id MVIOCPropertyFactoryGetLazyComponent(id obj, SEL cmd) {
+id MVIOCPropertyInjectionTypeGetLazyComponent(id obj, SEL cmd) {
     MVIOCContainer *container = objc_getAssociatedObject(obj, containerKey);
     NSMutableDictionary *cache = objc_getAssociatedObject(obj, cacheKey);
     NSMutableDictionary *explicitDependecies = objc_getAssociatedObject(obj, explicitDependeciesKey);
@@ -45,37 +45,51 @@ id MVIOCPropertyFactoryGetLazyComponent(id obj, SEL cmd) {
     return instance;
 }
 
-void MVIOCPropertyFactoryTidyUp(id obj, SEL cmd) {
+void MVIOCPropertyInjectionTypeTidyUp(id obj, SEL cmd) {
     objc_setAssociatedObject(obj, cacheKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     objc_setAssociatedObject(obj, explicitDependeciesKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     objc_msgSend(obj, @selector(originalDealloc));
 }
 
-@interface MVIOCPropertyFactory ()
+@interface MVIOCPropertyInjectionType ()
 
 - (NSArray *)getClassPropertiesForInject:(Class)clazz;
 
 @end
 
 
-@implementation MVIOCPropertyFactory
+@implementation MVIOCPropertyInjectionType
 
-- (id)createInstanceFor:(Class)clazz {
-    return [self createInstanceFor:clazz withDeps:nil];
-}
-
-- (id)createInstanceFor:(Class)clazz withDeps:(id)deps {
+- (id)createInstanceFor:(Class)clazz withDeps:(id)deps initSelector:(SEL)initSelector initParams:(NSArray*)initParams {
     NSMutableDictionary *depsDictionary = [(NSDictionary *)deps mutableCopy];
     
     id instance = class_createInstance(clazz, 0);
-    instance = [instance init];
+    
+    if (initSelector) {
+        NSMethodSignature *sig = [instance methodSignatureForSelector:initSelector];
+        NSInvocation *initInvocation = [NSInvocation invocationWithMethodSignature:sig];
+        [initInvocation setTarget:instance];
+        [initInvocation setSelector:initSelector];
+        int i = 2;
+        for (id arg in initParams) {
+            [initInvocation setArgument:&arg atIndex:i];
+            i++;
+        }
+        [initInvocation invoke];
+        NSLog(@"After invoke");
+        id anotherInstance;
+        [initInvocation getReturnValue:&anotherInstance];
+        instance = anotherInstance;
+    } else {
+        instance = [instance init];        
+    }
     
     NSArray *autoWiredDependencies = [self getClassPropertiesForInject:clazz];    
     
     for (MVIOCProperty *property in autoWiredDependencies) {
         if (property.lazy) {
             if (![instance respondsToSelector:NSSelectorFromString(property.name)]) {
-                class_addMethod(clazz, NSSelectorFromString(property.name), (IMP) MVIOCPropertyFactoryGetLazyComponent, "@@:");                
+                class_addMethod(clazz, NSSelectorFromString(property.name), (IMP) MVIOCPropertyInjectionTypeGetLazyComponent, "@@:");                
             }
             
             if (!objc_getAssociatedObject(instance, cacheKey)) {
@@ -97,7 +111,7 @@ void MVIOCPropertyFactoryTidyUp(id obj, SEL cmd) {
             if (![instance respondsToSelector:@selector(originalDealloc)]) {
                 IMP deallocImpl = class_getMethodImplementation(clazz, @selector(dealloc));
                 class_addMethod(clazz, @selector(originalDealloc), deallocImpl, "v");
-                class_replaceMethod(clazz, @selector(dealloc), (IMP)MVIOCPropertyFactoryTidyUp, "v@:");
+                class_replaceMethod(clazz, @selector(dealloc), (IMP)MVIOCPropertyInjectionTypeTidyUp, "v@:");
             }
         } else {
             id extDep = [depsDictionary objectForKey:property.name];
@@ -108,7 +122,7 @@ void MVIOCPropertyFactoryTidyUp(id obj, SEL cmd) {
             } else {
                 componentKey = [property.type copy];
             }
-
+            
             [instance setValue:[_container getComponent:componentKey] forKey:property.name];
             [componentKey release];
         }
@@ -121,9 +135,8 @@ void MVIOCPropertyFactoryTidyUp(id obj, SEL cmd) {
     
     [depsDictionary release];
     
-    return instance;    
+    return instance;
 }
-
 
 - (void)setContainer:(MVIOCContainer *)container {
     _container = container;

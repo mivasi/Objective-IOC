@@ -9,8 +9,8 @@
 #import "MVIOCContainer.h"
 #import "MVIOCProperty.h"
 
-#import "MVIOCFactory.h"
-#import "MVIOCPropertyFactory.h"
+#import "MVIOCInjectionType.h"
+#import "MVIOCPropertyInjectionType.h"
 
 #import "MVIOCCache.h"
 #import "MVIOCSingletonCache.h"
@@ -24,9 +24,12 @@ BOOL MVIOCContainerIsProtocol(id object) {
 
 @property(nonatomic, retain) NSMutableDictionary *components;
 @property(nonatomic, retain) NSMutableDictionary *componentsAsInstances;
+
 @property(nonatomic, retain) NSMutableDictionary *componentsFactories;
 @property(nonatomic, retain) NSMutableDictionary *componentsCaches;
 @property(nonatomic, retain) NSMutableDictionary *componentsDeps;
+@property(nonatomic, retain) NSMutableDictionary *componentsInitSelectors;
+@property(nonatomic, retain) NSMutableDictionary *componentsInitParams;
 
 @end
 
@@ -37,6 +40,8 @@ BOOL MVIOCContainerIsProtocol(id object) {
 @synthesize componentsFactories = _componentsFactories;
 @synthesize componentsCaches = _componentsCaches;
 @synthesize componentsDeps = _componentsDeps;
+@synthesize componentsInitSelectors = _componentsInitSelectors;
+@synthesize componentsInitParams = _componentsInitParams;
 
 - (id)init {
     if (self = [super init]) {
@@ -45,6 +50,8 @@ BOOL MVIOCContainerIsProtocol(id object) {
         self.componentsCaches = [NSMutableDictionary dictionary];
         self.componentsDeps = [NSMutableDictionary dictionary];
         self.componentsAsInstances = [NSMutableDictionary dictionary];
+        self.componentsInitSelectors = [NSMutableDictionary dictionary];
+        self.componentsInitParams = [NSMutableDictionary dictionary];        
     }
     return self;
 }
@@ -55,6 +62,9 @@ BOOL MVIOCContainerIsProtocol(id object) {
     self.componentsFactories = nil;
     self.componentsCaches = nil;
     self.componentsDeps = nil;
+    self.componentsInitSelectors = [NSMutableDictionary dictionary];
+    self.componentsInitParams = [NSMutableDictionary dictionary];        
+    
     [_factory release]; _factory = nil;
     [_cache release]; _cache = nil;
     [super dealloc];
@@ -83,9 +93,9 @@ BOOL MVIOCContainerIsProtocol(id object) {
     }
     
     [self.components setObject:component forKey:key];
-    if (_withFactory != nil) {
-        [self.componentsFactories setObject:_withFactory forKey:key];
-        _withFactory = nil;
+    if (_withInjectionType != nil) {
+        [self.componentsFactories setObject:_withInjectionType forKey:key];
+        _withInjectionType = nil;
     }
     if (_withCache != nil) {
         [self.componentsCaches setObject:_withCache forKey:key];
@@ -93,6 +103,12 @@ BOOL MVIOCContainerIsProtocol(id object) {
     }
     if (_withDeps != nil) {
         [self.componentsDeps setObject:_withDeps forKey:key];
+    }
+    if (_withInitSelector != nil) {
+        [self.componentsInitSelectors setObject:[NSValue valueWithPointer:_withInitSelector] forKey:key];
+    }
+    if (_withInitParams != nil) {
+        [self.componentsInitParams setObject:_withInitParams forKey:key];
     }
 }
 
@@ -116,10 +132,10 @@ BOOL MVIOCContainerIsProtocol(id object) {
         return instance;
     }
     
-    id<MVIOCFactory> componentFactory = [self.componentsFactories objectForKey:componentName];
+    id<MVIOCInjectionType> componentFactory = [self.componentsFactories objectForKey:componentName];
     
     if (componentFactory == nil) {
-        componentFactory = self.factory;
+        componentFactory = self.injectionType;
     }
 
     id<MVIOCCache> componentCache = [self.componentsCaches objectForKey:componentName];
@@ -134,13 +150,11 @@ BOOL MVIOCContainerIsProtocol(id object) {
     
     id instance;
     
-    id deps = [self.componentsDeps objectForKey:componentName];    
-    if (deps != nil) {
-        instance = [componentFactory createInstanceFor:componentClass withDeps:deps];
-    } else {
-        instance = [componentFactory createInstanceFor:componentClass];        
-    }
+    id deps = [self.componentsDeps objectForKey:componentName];
+    SEL initSelector = [[self.componentsInitSelectors objectForKey:componentName] pointerValue];
+    NSArray *initParams = [self.componentsInitParams objectForKey:componentName];
 
+    instance = [componentFactory createInstanceFor:componentClass withDeps:deps initSelector:initSelector initParams:initParams];
     
     if (componentCache != nil) {
         [componentCache storeInstance:instance withKey:componentName];
@@ -151,7 +165,7 @@ BOOL MVIOCContainerIsProtocol(id object) {
 
 #pragma mark Setup default container behaviour
 
-- (void)setFactory:(id <MVIOCFactory>)factory {
+- (void)setInjectionType:(id <MVIOCInjectionType>)factory {
     [_factory autorelease];
     _factory = [factory retain];
     if ([_factory respondsToSelector:@selector(setContainer:)]) {
@@ -159,9 +173,9 @@ BOOL MVIOCContainerIsProtocol(id object) {
     }
 }
 
-- (id<MVIOCFactory>)factory {
+- (id<MVIOCInjectionType>)injectionType {
     if (_factory == nil) {
-        [self setFactory:[[[MVIOCPropertyFactory alloc] init] autorelease]];
+        [self setInjectionType:[[[MVIOCPropertyInjectionType alloc] init] autorelease]];
     }
     return _factory;
 }
@@ -180,10 +194,10 @@ BOOL MVIOCContainerIsProtocol(id object) {
 
 #pragma mark Fluent setup methods for adding component
 
-- (id)withFactory:(id<MVIOCFactory>)factory {
-    _withFactory = factory;
-    if ([_factory respondsToSelector:@selector(setContainer:)]) {
-        [_factory setContainer:self];
+- (id)withInjectionType:(id<MVIOCInjectionType>)injectionType {
+    _withInjectionType = injectionType;
+    if ([injectionType respondsToSelector:@selector(setContainer:)]) {
+        [injectionType setContainer:self];
     }
     return self;
 }
@@ -217,6 +231,24 @@ BOOL MVIOCContainerIsProtocol(id object) {
 
 - (id)withDepsDictionary:(NSDictionary *)dictionary {
     _withDeps = dictionary;
+    return self;
+}
+
+- (id)withInitSelector:(SEL)selector params:(id)object, ... {
+    _withInitSelector = selector;
+    NSMutableArray *params = [NSMutableArray array];
+    id eachParam;
+    va_list argumentList;
+    if (object) {
+        [params addObject:object];
+        va_start(argumentList, object);
+        while (eachParam = va_arg(argumentList, id)) {
+            [params addObject:eachParam];
+        }
+        va_end(argumentList);
+    }
+    
+    _withInitParams = params;
     return self;
 }
 

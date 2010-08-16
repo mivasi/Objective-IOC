@@ -1,5 +1,5 @@
 //
-//  MVIOCPropertyFactory.h
+//  MVIOCPropertyInjectionType.h
 //  IOC
 //
 //  Created by Michal Vašíček on 7/25/10.
@@ -7,13 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MVIOCFactory.h"
+#import "MVIOCInjectionType.h"
 
 @class MVIOCContainer;
 
-@interface MVIOCPropertyFactory : NSObject <MVIOCFactory> {
+@interface MVIOCPropertyInjectionType : NSObject <MVIOCInjectionType> {
     MVIOCContainer *_container;
-    
 }
 
 @end

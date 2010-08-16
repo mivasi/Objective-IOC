@@ -8,26 +8,30 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol MVIOCFactory;
+@protocol MVIOCInjectionType;
 @protocol MVIOCCache;
 
 @interface MVIOCContainer : NSObject {
-    id<MVIOCFactory> _factory;
+    id<MVIOCInjectionType> _factory;
     id<MVIOCCache> _cache;
     
     NSMutableDictionary *_components;
     NSMutableDictionary *_componentsAsInstances;
+    
     NSMutableDictionary *_componentsFactories;
     NSMutableDictionary *_componentsCaches;
-    NSMutableDictionary *_componentsLazyLoads;
     NSMutableDictionary *_componentsDeps;
+    NSMutableDictionary *_componentsInitSelectors;
+    NSMutableDictionary *_componentsInitParams;
     
-    id<MVIOCFactory> _withFactory;
+    id<MVIOCInjectionType> _withInjectionType;
     id<MVIOCCache> _withCache;
     id _withDeps;
+    SEL _withInitSelector;
+    NSArray *_withInitParams;
 }
 
-@property(nonatomic, retain) id<MVIOCFactory> factory;
+@property(nonatomic, retain) id<MVIOCInjectionType> injectionType;
 @property(nonatomic, retain) id<MVIOCCache> cache;
 
 - (void)addComponent:(id)component;
@@ -39,13 +43,14 @@
 - (id)getComponent:(id)component;
 
 #pragma mark Setup default container behaviour
-- (void)setFactory:(id<MVIOCFactory>)factory;
+- (void)setInjectionType:(id<MVIOCInjectionType>)factory;
 
 #pragma mark Fluent setup methods for adding component
-- (id)withFactory:(id<MVIOCFactory>)factory;
+- (id)withInjectionType:(id<MVIOCInjectionType>)injectionType;
 - (id)withCache:(id<MVIOCCache>)cache;
 - (id)withCache;
 - (id)withDeps:(id)firstDep, ...;
 - (id)withDepsDictionary:(NSDictionary *)dictionary;
+- (id)withInitSelector:(SEL)selector params:(id)object, ...;
 
 @end

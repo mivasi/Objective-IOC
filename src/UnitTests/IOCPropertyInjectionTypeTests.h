@@ -17,11 +17,11 @@
 
 #import "MVIOC.h"
 
-@interface IOCPropertyFactoryTests : SenTestCase {
-    MVIOCPropertyFactory *_factory;
+@interface IOCPropertyInjectionTypeTests : SenTestCase {
+    MVIOCPropertyInjectionType *_factory;
 }
 
-@property(nonatomic, retain) MVIOCPropertyFactory *factory;
+@property(nonatomic, retain) MVIOCPropertyInjectionType *factory;
 
 #if USE_APPLICATION_UNIT_TEST
 
