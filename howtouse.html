@@ -1,0 +1,124 @@
+<h2>First step is easy</h2>
+<ul>
+	<li>Just make instance of container, which should be retained somewhere (e.g. in application delegate).</li>
+	<li>Fill created container with components. It can be application window or application delegate which you want have visible in every class in your application. But mainly add your main controller.</li>
+	<li>Get main controller from your container. It will instantiate controller and fills it with his dependecies from container.</li>
+	<li>Continue like in any other application.</li>
+</ul>
+
+<pre>
+<code>
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.container = [[[MVIOCContainer alloc] init] autorelease];
+    
+    //add application delegate into container
+    [self.container addComponent:self];
+    
+    //add application window into container
+    [self.container addComponent:self.window];
+    
+    //Add main controller into container
+    [self.container addComponent:[MainController class]];
+    
+    //Get main controller instance from container
+    UIViewController *mainController = 
+    	(UIViewController *)[self.container getComponent:[MainController class]];
+    
+    //place main controller view into window
+    [self.window addSubview:mainController.view];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+</code>
+</pre>
+
+<h2>Adding components into container</h2>
+<p>There is many ways how to add components into container :</p>
+<ul>
+	<li>Add component as instance. This is especialy useful when you want to add application delegate or window<br /><code>[container addComponent:instance]</code></li>
+	<li>Add component as class.<br /><code>[container addComponent:[SomeClass class]]</code></li>
+	<li>Add component which represents some role. This can be used when you have some protocol(role) and class(representer) which implement that protocol<br /><code>[container addComponent:[SomeClass class] representing:@protocol(SomeProtocol)]</code></li>
+	<li>Add component which should behave as sigleton. That means it is created just one time, and then just reused.<br /><code>[[self.container withCache] addComponent:[SomeClass class]]</code></li>
+	<li>Add component with custom init method. Useful when you want to use <strong>interface builder</strong><br /><pre><code>[[self.container withInitSelector:@selector(initWithNibName:bundle:) params:@"NextController", [NSBundle mainBundle], nil] addComponent:[NextController class]];</code></pre></li>
+	<li>Add component with explicitly defined dependecies.<br/>
+		<pre><code>NSDictionary *deps = [NSDictionary dictionaryWithObjectsAndKeys:[SomeColaborator class], @"colaborator", nil];
+		[[self.container withDepsDictionary:deps] addComponent:[SomeClass class]];</code></pre>
+	</li>
+</ul>
+
+<h2>Getting components from container</h2>
+<p>
+Components should be returned from container on entry points. For example in the <code>application:didFinishLaunchingWithOptions:</code> selector of application delegate can be used something like this:<br />
+<pre><code>UIViewController *mainController = 
+	(UIViewController *)[self.container getComponent:[MainController class]];
+[self.window addSubview:mainController.view];</code></pre>
+All other components should be created throught injection as colaborators. Ideal situation is just one usage of getComponent method of container.
+<p>
+
+<h2>Writing classes which can be placed into container</h2>
+<p>Great emphasis is placed on creating classes as usual. Do not to force users of this framework to inherit some special abstract class or implement protocol. So, how to make it:</p>
+<pre><code>//SomeController.h
+
+@interface SomeController : UIViewController {
+	//autowire injection
+    SomeAppDelegate *injAppDelegate;
+    SomeService *service;
+}
+//make it public and to allow injection
+@property(nonatomic, assign) SomeAppDelegate *appDelegate;
+@property(nonatomic, retain) SomeService *service;
+@property(nonatomic, retain) NextController *nextController;
+
+@end
+
+//SomeController.m
+
+@implementation MainController
+
+//inj prefix tell to container to use autowiring. So he lookup for 'SomeAppDelegate' component and inject it.
+@synthesize appDelegate = injAppDelegate;
+@synthesize service;
+//when we use dynamic we are saying to container that we want lazy load. So collaborator is created in time when we want to use it.
+@dynamic nextController;
+
+@end</code></pre>
+<p>What we have seen here:</p>
+<ul>
+	<li>Autowiring of components throught use of prefix 'inj' on instance variable member<br />Autowiring is the most preferable style of wiring components together.
+	 Container take a look at variable member type and ask container for component of this type. Type can be specified as some class or protocol</li>
+	<li>Some service component which must be added in manualy. Look how: <br /><pre><code>NSDictionary *deps = [NSDictionary dictionaryWithObjectsAndKeys:[SomeService class], @"service", nil];
+[[self.container withDepsDictionary:deps] addComponent:[SomeController class]];</code></pre>
+	As you can see, autowiring and explicitly added in components can be mixed togehter. Dictionaries keys are names of properties and values are components representers, which are in container.
+	</li>
+	<li>Using of lazy loading feature by using <code>@dynamic property</code>. This is very useful when we are wiring controllers together.
+	It means situation when in some controller touch on button should open another controller and so on. Lazy load can use autowiring too.
+	</li>
+</ul>
+
+<h2>Customization of Container</h2>
+<h3>Injection types</h3>
+<p>As default container uses property injection type when adding component. But there can be more injection types.
+It is possible to say which type to use when adding component or it can be setted as default for all addings.
+</p>
+<ul>
+	<li>Add component with explicitly setted injection type<br /><pre><code>[[container withInjectionType:someInjectionType] addComponent:[SomeClass class]]</code></pre></li>
+	<li>Set some injection type which is used as default<br /><pre><code>container.injectionType = someInjectionType</code></pre></li>	
+</ul>
+<h4>Container now supports two injection types.</h4>
+<ul>
+	<li>Property injection type (default)</li>
+	<li>Factory injection type</li>
+</ul>
+<p>It is possible to write your own injection type. Just implement <code><MVIOCInjectionType></code> protocol and use it</p>
+
+<h3>Caching of components</h3>
+<p>Caching of components is mainly used to simulate singleton behavior of components. As with injection types, there can be more caching strategies.
+Framework now support just really easy caching which is in most cases good enough, but it is not thread safe. But other can be written, for example thread safe caching, or caching just in threads ...<br />
+How to use cache:
+</p>
+<ul>
+	<li><code>[[container withCache] addComponent:[SomeClass class]]</code> is using default cache strategy, which can be setted with <code>container.cache = someCacheStrategy</code></li>
+	<li><code>[[container withCache:cacheStrategy] addComponent:[SomeClass class]]</code> is saying to use explicitly given cache strategy</li>
+</ul>
