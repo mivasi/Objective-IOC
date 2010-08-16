@@ -12,6 +12,7 @@
 
 #import "MVIOCInjectionType.h"
 #import "MVIOCPropertyInjectionType.h"
+#import "MVIOCFactoryInjectionType.h"
 
 #import "MVIOCCache.h"
 #import "MVIOCSingletonCache.h"
