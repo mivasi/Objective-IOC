@@ -103,12 +103,15 @@ BOOL MVIOCContainerIsProtocol(id object) {
     }
     if (_withDeps != nil) {
         [self.componentsDeps setObject:_withDeps forKey:key];
+        _withDeps = nil;
     }
     if (_withInitSelector != nil) {
         [self.componentsInitSelectors setObject:[NSValue valueWithPointer:_withInitSelector] forKey:key];
+        _withInitSelector = nil;
     }
     if (_withInitParams != nil) {
         [self.componentsInitParams setObject:_withInitParams forKey:key];
+        _withInitParams = nil;
     }
 }
 

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MVIOCInjectionType.h"
 
-#define MVIOCFactoryInjectionTypeDefault [[[MVIOCFactoryInjectionType alloc] init] autorelease]
+#define MVIOCFactoryInjectionTypeDefault [[[MVIOCFactoryInjectionType alloc] initWithFactoryInjectionType:[[[MVIOCPropertyInjectionType alloc] init] autorelease]] autorelease]
 
 @class MVIOCInjectionType;
 
@@ -19,5 +19,7 @@
 }
 
 @property(nonatomic, retain) id<MVIOCInjectionType> factoryInjectionType;
+
+- (id)initWithFactoryInjectionType:(id<MVIOCInjectionType>)injectionType;
 
 @end

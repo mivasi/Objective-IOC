@@ -13,6 +13,14 @@
 
 @implementation MVIOCFactoryInjectionType
 
+- (id)initWithFactoryInjectionType:(id<MVIOCInjectionType>)injectionType {
+    if (self = [super init]) {
+        self.factoryInjectionType = injectionType;
+    }
+    
+    return self;
+}
+
 - (void)dealloc {
     [_factoryInjectionType release];_factoryInjectionType = nil;
     [super dealloc];
