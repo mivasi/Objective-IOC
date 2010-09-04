@@ -1,0 +1,18 @@
+<p>
+Factory injection type is mostly used when we need to place into container objects of classes we did not created. Fore example objects from cocoa, or another 3rd party code.<br />
+Simply must be created factory class, which create object you need. Factory class must implement <code>-(id)createInstance<code> method, where object is created.
+</p>
+<p>Define factory which is added to container</p>
+<pre><code>@implementation LabelsFactory
+- (id)createInstance {
+    UILabel *label = [[[UILabel alloc] init] autorelease];
+    label.text = @"From factory";
+    [label sizeToFit];
+    return label;
+}
+@end</code></pre>
+<p>Add component with factory injection type</p>
+<pre><code>[[self.container withInjectionType:MVIOCFactoryInjectionTypeDefault] addComponent:[LabelsFactory class] representing:[UILabel class]];</pre></code>
+<p>MVIOCFactoryInjectionTypeDefault is macro, creating factory injection type with 'factory object injection type' setted to property injection type. What does it means?
+It means, that factory object which is created and upon which is called createInstance, can be filled with dependecies from container, as any other component inside container.
+</p>
