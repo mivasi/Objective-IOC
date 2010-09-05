@@ -84,7 +84,6 @@ void MVIOCPropertyInjectionTypeTidyUp(id obj, SEL cmd) {
             i++;
         }
         [initInvocation invoke];
-        NSLog(@"After invoke");
         id anotherInstance;
         [initInvocation getReturnValue:&anotherInstance];
         instance = anotherInstance;

@@ -60,8 +60,7 @@
 - (void)testAssignProperty {
     objc_property_t objcProperty = class_getProperty([self class], "assignAttrProperty");
     
-    NSString *propertyAttributes = [NSString stringWithCString:property_getAttributes(objcProperty) encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", propertyAttributes);
+    [NSString stringWithCString:property_getAttributes(objcProperty) encoding:NSUTF8StringEncoding];
     
     MVIOCProperty *property = [[[MVIOCProperty alloc] initWithObjCProperty:objcProperty] autorelease];
     STAssertTrue([property.name isEqual:@"assignAttrProperty"], @"Property has bad name");
