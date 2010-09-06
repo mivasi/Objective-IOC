@@ -109,7 +109,7 @@ It is possible to say which type to use when adding component or it can be sette
 <h4>Container now supports two injection types.</h4>
 <ul>
 	<li>Property injection type (default)</li>
-	<li>Factory injection type</li>
+	<li>[[Factory injection type]]</li>
 </ul>
 <p>It is possible to write your own injection type. Just implement <code><MVIOCInjectionType></code> protocol and use it</p>
 
@@ -122,3 +122,13 @@ How to use cache:
 	<li><code>[[container withCache] addComponent:[SomeClass class]]</code> is using default cache strategy, which can be setted with <code>container.cache = someCacheStrategy</code></li>
 	<li><code>[[container withCache:cacheStrategy] addComponent:[SomeClass class]]</code> is saying to use explicitly given cache strategy</li>
 </ul>
+
+<h3>Act on components</h3>
+<p>Act on component is feature, when you can say 'make some act on created component'. Library currenty implement [[Good Controller Actor]] which should help with controller views and subviews.
+It is usable, when you need to do something with instance which is just created. How to use :
+</p>
+<ul>
+	<li>Make your own actor. Just implement <code>MVIOCActor</code> protocol</li>
+	<li>Create instance of your actor and use it when adding component. <code>[[self.container actAs:yourActorInstance] addComponent:[SomeComponentsClass]];</code></li>
+</ul>
+<p>Make note, that actor is used just when creating new component. So when you use caching, actor is run upon instance just one time.</p>

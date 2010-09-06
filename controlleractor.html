@@ -1,0 +1,40 @@
+<h2>Good Controller Actor</h2>
+<p>This feature is used for those who not use 'Inteface Builder' to create their views. It's solving problem, when you have many views and subviews, and some of your deep subview need reference of owner controller.
+In short, controller reference for every view. Let's have some view <br/>
+<pre><code>
+//SomeView.h
+@interface SomeView : UIView { 
+}
+//property with reference on controller, must be namend 'owningController'
+@property(readonly) MyViewController *owningController;
+@end
+
+//SomeView.m
+@implementation SomeView
+@dynamic owningController;
+@end
+</code></pre>
+<br/>
+And some Controller :<br/>
+<pre><code>
+//MyViewController.h
+@interface MyViewController : UIViewController { 
+}
+@end
+
+//MyViewController.m
+@implementation MyViewController
+- (void)viewDidLoad {
+	SomeView *customView = [[[SomeView alloc] init] autorelease];
+	[self.view addSubView:customView];
+}
+@end
+</code></pre><br/>
+And now last step, add controller into container :<br/>
+<pre><code>
+MVIOCControllerActor *goodControllerActor = [[[MVIOCControllerActor alloc] init] autorelease];
+[[self.container actAs:goodControllerActor] addComponent:[MyViewController class]];
+</code></pre><br/>
+
+</p>
+<p>After that all, everywhere in our views we can have readonly property marked as <code>@dynamic</code> named exactly 'owningController' which is filled with controller in which is that view showed</p>
