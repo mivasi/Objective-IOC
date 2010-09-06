@@ -35,6 +35,11 @@
 		6C5D41371215B6F10062E4E1 /* MVIOCFactoryInjectionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D41361215B6F10062E4E1 /* MVIOCFactoryInjectionType.m */; };
 		6C5D41391215B7100062E4E1 /* MVIOCFactoryInjectionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D41361215B6F10062E4E1 /* MVIOCFactoryInjectionType.m */; };
 		6C5D413B1215B7240062E4E1 /* MVIOCFactoryInjectionType.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C5D41351215B6F10062E4E1 /* MVIOCFactoryInjectionType.h */; };
+		6C6C817E1233C6F00014FEAB /* MVIOCControllerActor.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C6C817C1233C6F00014FEAB /* MVIOCControllerActor.h */; };
+		6C6C817F1233C6F00014FEAB /* MVIOCControllerActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C817D1233C6F00014FEAB /* MVIOCControllerActor.m */; };
+		6C6C81801233C6F00014FEAB /* MVIOCControllerActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C817D1233C6F00014FEAB /* MVIOCControllerActor.m */; };
+		6C6C81881233C73E0014FEAB /* ControllerActorTests.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C6C81861233C73E0014FEAB /* ControllerActorTests.h */; };
+		6C6C818A1233C73E0014FEAB /* ControllerActorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C81871233C73E0014FEAB /* ControllerActorTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +84,11 @@
 		6C5D41331215B6520062E4E1 /* IOCFactoryInjectionTypeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOCFactoryInjectionTypeTest.m; sourceTree = "<group>"; };
 		6C5D41351215B6F10062E4E1 /* MVIOCFactoryInjectionType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCFactoryInjectionType.h; sourceTree = "<group>"; };
 		6C5D41361215B6F10062E4E1 /* MVIOCFactoryInjectionType.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = MVIOCFactoryInjectionType.m; path = ../MVIOCFactoryInjectionType.m; sourceTree = "<group>"; };
+		6C6C811612339FDA0014FEAB /* MVIOCActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCActor.h; sourceTree = "<group>"; };
+		6C6C817C1233C6F00014FEAB /* MVIOCControllerActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVIOCControllerActor.h; sourceTree = "<group>"; };
+		6C6C817D1233C6F00014FEAB /* MVIOCControllerActor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVIOCControllerActor.m; sourceTree = "<group>"; };
+		6C6C81861233C73E0014FEAB /* ControllerActorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControllerActorTests.h; sourceTree = "<group>"; };
+		6C6C81871233C73E0014FEAB /* ControllerActorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControllerActorTests.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* IOC-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IOC-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -194,6 +204,7 @@
 		6C1D73A411F21EE900F0EFC2 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				6C6C81851233C71A0014FEAB /* UI */,
 				6C1D73F211F237B800F0EFC2 /* IOCContainerAddComponentsTests.h */,
 				6C1D73F311F237B800F0EFC2 /* IOCContainerAddComponentsTests.m */,
 				6C05404911FB330900FDFB3D /* IOCContainerGetComponentsTests.h */,
@@ -215,6 +226,7 @@
 		6C1D73D711F2331700F0EFC2 /* MVIOC */ = {
 			isa = PBXGroup;
 			children = (
+				6C6C815A1233C0B40014FEAB /* UI */,
 				6C1D740011F2387600F0EFC2 /* MVIOCContainer.h */,
 				6C1D740111F2387600F0EFC2 /* MVIOCContainer.m */,
 				6C0540C411FB4B5B00FDFB3D /* MVIOCProperty.h */,
@@ -228,8 +240,27 @@
 				6C07AA1F11FF2B1100358364 /* MVIOC.h */,
 				6C5D41351215B6F10062E4E1 /* MVIOCFactoryInjectionType.h */,
 				6C5D41361215B6F10062E4E1 /* MVIOCFactoryInjectionType.m */,
+				6C6C811612339FDA0014FEAB /* MVIOCActor.h */,
 			);
 			path = MVIOC;
+			sourceTree = "<group>";
+		};
+		6C6C815A1233C0B40014FEAB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				6C6C817C1233C6F00014FEAB /* MVIOCControllerActor.h */,
+				6C6C817D1233C6F00014FEAB /* MVIOCControllerActor.m */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		6C6C81851233C71A0014FEAB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				6C6C81861233C73E0014FEAB /* ControllerActorTests.h */,
+				6C6C81871233C73E0014FEAB /* ControllerActorTests.m */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +278,8 @@
 				6C07A88F11FEDE8300358364 /* MVIOCCache.h in Headers */,
 				6C07A89011FEDE8300358364 /* MVIOCSingletonCache.h in Headers */,
 				6C5D413B1215B7240062E4E1 /* MVIOCFactoryInjectionType.h in Headers */,
+				6C6C817E1233C6F00014FEAB /* MVIOCControllerActor.h in Headers */,
+				6C6C81881233C73E0014FEAB /* ControllerActorTests.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +375,7 @@
 				6C07A89311FEDEB200358364 /* MVIOCPropertyInjectionType.m in Sources */,
 				6C07A89411FEDEB200358364 /* MVIOCSingletonCache.m in Sources */,
 				6C5D41391215B7100062E4E1 /* MVIOCFactoryInjectionType.m in Sources */,
+				6C6C817F1233C6F00014FEAB /* MVIOCControllerActor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +395,8 @@
 				6C3BEDDF1201D16500A3205F /* MVIOCPropertyTests.m in Sources */,
 				6C5D41341215B6520062E4E1 /* IOCFactoryInjectionTypeTest.m in Sources */,
 				6C5D41371215B6F10062E4E1 /* MVIOCFactoryInjectionType.m in Sources */,
+				6C6C81801233C6F00014FEAB /* MVIOCControllerActor.m in Sources */,
+				6C6C818A1233C73E0014FEAB /* ControllerActorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

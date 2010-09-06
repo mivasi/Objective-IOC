@@ -22,6 +22,9 @@
 
 #import "MVIOCCache.h"
 #import "MVIOCSingletonCache.h"
+
+#import "MVIOCActor.h"
+
 #import <objc/runtime.h>
 
 BOOL MVIOCContainerIsProtocol(id object) {
@@ -38,6 +41,7 @@ BOOL MVIOCContainerIsProtocol(id object) {
 @property(nonatomic, retain) NSMutableDictionary *componentsDeps;
 @property(nonatomic, retain) NSMutableDictionary *componentsInitSelectors;
 @property(nonatomic, retain) NSMutableDictionary *componentsInitParams;
+@property(nonatomic, retain) NSMutableDictionary *componentsActors;
 
 @end
 
@@ -50,6 +54,7 @@ BOOL MVIOCContainerIsProtocol(id object) {
 @synthesize componentsDeps = _componentsDeps;
 @synthesize componentsInitSelectors = _componentsInitSelectors;
 @synthesize componentsInitParams = _componentsInitParams;
+@synthesize componentsActors = _componentsActors;
 
 - (id)init {
     if (self = [super init]) {
@@ -59,7 +64,8 @@ BOOL MVIOCContainerIsProtocol(id object) {
         self.componentsDeps = [NSMutableDictionary dictionary];
         self.componentsAsInstances = [NSMutableDictionary dictionary];
         self.componentsInitSelectors = [NSMutableDictionary dictionary];
-        self.componentsInitParams = [NSMutableDictionary dictionary];        
+        self.componentsInitParams = [NSMutableDictionary dictionary];
+        self.componentsActors = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -70,9 +76,9 @@ BOOL MVIOCContainerIsProtocol(id object) {
     self.componentsFactories = nil;
     self.componentsCaches = nil;
     self.componentsDeps = nil;
-    self.componentsInitSelectors = [NSMutableDictionary dictionary];
-    self.componentsInitParams = [NSMutableDictionary dictionary];        
-    
+    self.componentsInitSelectors = nil;
+    self.componentsInitParams = nil;        
+    self.componentsActors = nil;
     [_factory release]; _factory = nil;
     [_cache release]; _cache = nil;
     [super dealloc];
@@ -120,6 +126,10 @@ BOOL MVIOCContainerIsProtocol(id object) {
     if (_withInitParams != nil) {
         [self.componentsInitParams setObject:_withInitParams forKey:key];
         _withInitParams = nil;
+    }
+    if (_actAs != nil) {
+        [self.componentsActors setObject:_actAs forKey:key];
+        _actAs = nil;
     }
 }
 
@@ -169,6 +179,11 @@ BOOL MVIOCContainerIsProtocol(id object) {
     
     if (componentCache != nil) {
         [componentCache storeInstance:instance withKey:componentName];
+    }
+    
+    id<MVIOCActor> componentActor = [self.componentsActors objectForKey:componentName];
+    if (componentActor != nil) {
+        [componentActor makeActOnInstance:instance];
     }
     
     return instance;
@@ -260,6 +275,11 @@ BOOL MVIOCContainerIsProtocol(id object) {
     }
     
     _withInitParams = params;
+    return self;
+}
+
+- (id)actAs:(id <MVIOCActor>)actor {
+    _actAs = actor;
     return self;
 }
 

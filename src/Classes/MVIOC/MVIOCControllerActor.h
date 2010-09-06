@@ -14,15 +14,16 @@
 // limitations under the License.
 // 
 
-#import "MVIOCContainer.h"
-#import "MVIOCProperty.h"
-
-#import "MVIOCInjectionType.h"
-#import "MVIOCPropertyInjectionType.h"
-#import "MVIOCFactoryInjectionType.h"
-
-#import "MVIOCCache.h"
-#import "MVIOCSingletonCache.h"
-
+#import <Foundation/Foundation.h>
 #import "MVIOCActor.h"
-#import "MVIOCControllerActor.h"
+
+
+void MVIOCControllerActorAddSubView(UIView *view, SEL cmd, UIView *subView);
+UIViewController* MVIOCControllerActorOwningController (UIView *obj, SEL cmd);
+void MVIOCControllerActorSetView(id obj, SEL cmd, UIView * view);
+
+@interface MVIOCControllerActor : NSObject <MVIOCActor>{
+
+}
+
+@end

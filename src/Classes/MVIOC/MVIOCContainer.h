@@ -18,6 +18,7 @@
 
 @protocol MVIOCInjectionType;
 @protocol MVIOCCache;
+@protocol MVIOCActor;
 
 @interface MVIOCContainer : NSObject {
     id<MVIOCInjectionType> _factory;
@@ -31,12 +32,15 @@
     NSMutableDictionary *_componentsDeps;
     NSMutableDictionary *_componentsInitSelectors;
     NSMutableDictionary *_componentsInitParams;
+    NSMutableDictionary *_componentsActors;
+    
     
     id<MVIOCInjectionType> _withInjectionType;
     id<MVIOCCache> _withCache;
     id _withDeps;
     SEL _withInitSelector;
     NSArray *_withInitParams;
+    id<MVIOCActor> _actAs;
 }
 
 @property(nonatomic, retain) id<MVIOCInjectionType> injectionType;
@@ -60,5 +64,5 @@
 - (id)withDeps:(id)firstDep, ...;
 - (id)withDepsDictionary:(NSDictionary *)dictionary;
 - (id)withInitSelector:(SEL)selector params:(id)object, ...;
-
+- (id)actAs:(id<MVIOCActor>)actor;
 @end

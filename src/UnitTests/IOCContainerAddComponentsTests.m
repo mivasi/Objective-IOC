@@ -18,6 +18,7 @@
 #import "MVIOCPropertyInjectionType.h"
 #import "MVIOCContainer.h"
 #import "MVIOCCache.h"
+#import "MVIOCActor.h"
 #import <OCMock/OCMock.h>
 #import "TestClasses.h"
 
@@ -184,6 +185,22 @@
 
 - (BOOL)checkInitWithCustomSelectorParams:(NSArray *)params {
     if ([params count] == 2) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)testAddComponentWithActAs {
+    id actor = [OCMockObject mockForProtocol:@protocol(MVIOCActor)];
+    [[actor expect] makeActOnInstance:[OCMArg checkWithSelector:@selector(checkCallActorMakeActOnInstance:) onObject:self]];
+    [[self.container actAs:actor] addComponent:[IOCContainerAddComponentsTests class]];
+    [self.container getComponent:[IOCContainerAddComponentsTests class]];
+    
+    [actor verify];
+}
+
+- (BOOL)checkCallActorMakeActOnInstance:(id)instance {
+    if ([instance isKindOfClass:[IOCContainerAddComponentsTests class]]) {
         return YES;
     }
     return NO;
