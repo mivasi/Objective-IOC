@@ -1,7 +1,7 @@
 Objective IOC
 =============
 
-Inversion Of Control for objective-c.
+Dependecy injection for objective-c.
 
 How to add library into your project
 ====================================
