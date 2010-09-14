@@ -1,7 +1,7 @@
 Objective IOC
 =============
 
-Dependecy injection for objective-c.
+Dependency injection for objective-c.
 
 How to add library into your project
 ====================================
