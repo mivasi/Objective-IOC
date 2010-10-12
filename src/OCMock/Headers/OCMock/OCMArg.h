@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------------------
-//  $Id: OCMArg.h 57 2010-07-19 06:14:27Z erik $
+//  $Id: OCMArg.h 65 2010-07-28 01:49:42Z erik $
 //  Copyright (c) 2009-2010 by Mulle Kybernetik. See License file for details.
 //---------------------------------------------------------------------------------------
 
@@ -30,4 +30,4 @@
 @end
 
 #define OCMOCK_ANY [OCMArg any]
-#define OCMOCK_VALUE(variable) [NSValue value:&variable withObjCType:@encode(typeof(variable))]
+#define OCMOCK_VALUE(variable) [NSValue value:&variable withObjCType:@encode(__typeof__(variable))]
