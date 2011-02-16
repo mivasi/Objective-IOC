@@ -24,9 +24,17 @@
 
 @end
 
+@protocol IOCContainerTestsProtocol1
+
+@end
+
+@protocol IOCContainerTestsProtocol2
+
+@end
+
 @class MVIOCContainer;
 
-@interface IOCContainerAddComponentsTests : SenTestCase <IOCContainerTestsProtocol>{
+@interface IOCContainerAddComponentsTests : SenTestCase <IOCContainerTestsProtocol, IOCContainerTestsProtocol1>{
     MVIOCContainer *_container;
 }
 

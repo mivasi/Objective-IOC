@@ -42,6 +42,9 @@ BOOL MVIOCContainerIsProtocol(id object) {
 @property(nonatomic, retain) NSMutableDictionary *componentsInitSelectors;
 @property(nonatomic, retain) NSMutableDictionary *componentsInitParams;
 @property(nonatomic, retain) NSMutableDictionary *componentsActors;
+@property(nonatomic, retain) NSMutableDictionary *aliasesTo;
+
+- (NSString *)extractKeyFrom:(id)representing;
 
 @end
 
@@ -55,6 +58,7 @@ BOOL MVIOCContainerIsProtocol(id object) {
 @synthesize componentsInitSelectors = _componentsInitSelectors;
 @synthesize componentsInitParams = _componentsInitParams;
 @synthesize componentsActors = _componentsActors;
+@synthesize aliasesTo = _aliasesTo;
 
 - (id)init {
     if (self = [super init]) {
@@ -66,6 +70,8 @@ BOOL MVIOCContainerIsProtocol(id object) {
         self.componentsInitSelectors = [NSMutableDictionary dictionary];
         self.componentsInitParams = [NSMutableDictionary dictionary];
         self.componentsActors = [NSMutableDictionary dictionary];
+        self.aliasesTo = [NSMutableDictionary dictionary];
+        
     }
     return self;
 }
@@ -79,6 +85,7 @@ BOOL MVIOCContainerIsProtocol(id object) {
     self.componentsInitSelectors = nil;
     self.componentsInitParams = nil;        
     self.componentsActors = nil;
+    self.aliasesTo = nil;
     [_factory release]; _factory = nil;
     [_cache release]; _cache = nil;
     [super dealloc];
@@ -89,48 +96,57 @@ BOOL MVIOCContainerIsProtocol(id object) {
 }
 
 - (void)addComponent:(id)component representing:(id)representing {
-    NSString *key;
+    NSArray *keys;
     
-    if (MVIOCContainerIsProtocol(representing)) {
-        key = NSStringFromProtocol(representing);
-    } else if ([representing isKindOfClass:[NSString class]]) {
-        key = representing;
-    } else if ((Class)representing == [representing class]){
-        key = NSStringFromClass(representing);
+    if ([representing isKindOfClass:[NSArray class]]) {
+        NSMutableArray *keysTemp = [NSMutableArray array];
+        for (id representingKeyObject in representing) {
+            [keysTemp addObject:[self extractKeyFrom:representingKeyObject]];
+        }
+        keys = keysTemp;
     } else {
-        key = NSStringFromClass([representing class]);
+        keys = [NSArray arrayWithObject:[self extractKeyFrom:representing]];
     }
-
+    
+    NSString *key = [keys objectAtIndex:0];
+    
     if ((Class)component != [component class]) {
         [self.componentsAsInstances setObject:component forKey:key];
-        return;
+    } else {
+        [self.components setObject:component forKey:key];
+        if (_withInjectionType != nil) {
+            [self.componentsFactories setObject:_withInjectionType forKey:key];
+            
+        }
+        if (_withCache != nil) {
+            [self.componentsCaches setObject:_withCache forKey:key];
+        }
+        if (_withDeps != nil) {
+            [self.componentsDeps setObject:_withDeps forKey:key];
+        }
+        if (_withInitSelector != nil) {
+            [self.componentsInitSelectors setObject:[NSValue valueWithPointer:_withInitSelector] forKey:key];
+        }
+        if (_withInitParams != nil) {
+            [self.componentsInitParams setObject:_withInitParams forKey:key];
+        }
+        if (_actAs != nil) {
+            [self.componentsActors setObject:_actAs forKey:key];
+        }
     }
     
-    [self.components setObject:component forKey:key];
-    if (_withInjectionType != nil) {
-        [self.componentsFactories setObject:_withInjectionType forKey:key];
-        _withInjectionType = nil;
+    if (keys.count > 1) {
+        for (NSString *aliasKey in keys) {
+            [self.aliasesTo setObject:key forKey:aliasKey];
+        }
     }
-    if (_withCache != nil) {
-        [self.componentsCaches setObject:_withCache forKey:key];
-        _withCache = nil;
-    }
-    if (_withDeps != nil) {
-        [self.componentsDeps setObject:_withDeps forKey:key];
-        _withDeps = nil;
-    }
-    if (_withInitSelector != nil) {
-        [self.componentsInitSelectors setObject:[NSValue valueWithPointer:_withInitSelector] forKey:key];
-        _withInitSelector = nil;
-    }
-    if (_withInitParams != nil) {
-        [self.componentsInitParams setObject:_withInitParams forKey:key];
-        _withInitParams = nil;
-    }
-    if (_actAs != nil) {
-        [self.componentsActors setObject:_actAs forKey:key];
-        _actAs = nil;
-    }
+    
+    _withInjectionType = nil;
+    _withCache = nil;
+    _withDeps = nil;
+    _withInitSelector = nil;
+    _withInitParams = nil;
+    _actAs = nil;    
 }
 
 - (id)getComponent:(id)component {
@@ -142,6 +158,10 @@ BOOL MVIOCContainerIsProtocol(id object) {
         componentName = component;
     } else {
         componentName = NSStringFromClass(component);
+    }
+    
+    if ([self.aliasesTo objectForKey:componentName]) {
+        componentName = [self.aliasesTo objectForKey:componentName];
     }
     
     Class componentClass = [self.components objectForKey:componentName];
@@ -285,5 +305,20 @@ BOOL MVIOCContainerIsProtocol(id object) {
 
 #pragma mark Private methods
 
+- (NSString *)extractKeyFrom:(id)representing {
+    NSString *key;
+    
+    if (MVIOCContainerIsProtocol(representing)) {
+        key = NSStringFromProtocol(representing);
+    } else if ([representing isKindOfClass:[NSString class]]) {
+        key = representing;
+    } else if ((Class)representing == [representing class]){
+        key = NSStringFromClass(representing);
+    } else {
+        key = NSStringFromClass([representing class]);
+    }
+    
+    return key;
+}
 
 @end

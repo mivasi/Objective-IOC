@@ -58,6 +58,22 @@
     STAssertTrue([component isKindOfClass:[IOCContainerAddComponentsTests class]], @"Returned component has right type");
 }
 
+- (void)testAddComponentClassAsTypesRepresentingInArray {
+    
+    [self.container addComponent:[IOCContainerAddComponentsTests class]
+                    representing:[NSArray arrayWithObjects:
+                                  @protocol(IOCContainerTestsProtocol),
+                                  @protocol(IOCContainerTestsProtocol1),
+                                  nil]];
+    id componentByIOCContainerTestsProtocol = [self.container getComponent:@protocol(IOCContainerTestsProtocol)];
+    id componentByIOCContainerTestsProtocol1 = [self.container getComponent:@protocol(IOCContainerTestsProtocol1)];
+    STAssertNotNil(componentByIOCContainerTestsProtocol, @"componentByIOCContainerTestsProtocol is not nil");
+    STAssertTrue(componentByIOCContainerTestsProtocol1 != nil, @"componentByIOCContainerTestsProtocol1 is not nil");
+    NSLog(@"%@ vs %@", componentByIOCContainerTestsProtocol, componentByIOCContainerTestsProtocol1);
+    
+    STAssertTrue([componentByIOCContainerTestsProtocol class] == [componentByIOCContainerTestsProtocol1 class], @"Components playing more roles are right");
+}
+
 - (void)testGetComponentByString {
     [self.container addComponent:[IOCContainerAddComponentsTests class] representing:@protocol(IOCContainerTestsProtocol)];
     id component = [self.container getComponent:@"IOCContainerTestsProtocol"];

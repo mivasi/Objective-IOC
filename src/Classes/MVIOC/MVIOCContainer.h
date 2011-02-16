@@ -33,6 +33,7 @@
     NSMutableDictionary *_componentsInitSelectors;
     NSMutableDictionary *_componentsInitParams;
     NSMutableDictionary *_componentsActors;
+    NSMutableDictionary *_aliasesTo;
     
     
     id<MVIOCInjectionType> _withInjectionType;
