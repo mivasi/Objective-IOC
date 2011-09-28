@@ -1,39 +1,180 @@
-Objective IOC
-=============
+#Objective IOC
 
 Dependency injection for objective-c.
 
-How to add library into your project
-====================================
+##How to use
+- Just make instance of container, which should be retained somewhere (e.g. in application delegate).
+- Fill created container with components. It can be application window or application delegate which you want have visible in every class in your application. But mainly add your main controller.
+- Get main controller from your container. It will instantiate controller and fills it with his dependecies from container.
+- Continue like in any other application.
 
-Objective IOC is compiled as a static library. So you can add it to your
-project as "dependent project".
+```objective-c
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.container = [[[MVIOCContainer alloc] init] autorelease];
+    
+    //add application delegate into container
+    [self.container addComponent:self];
+    
+    //add application window into container
+    [self.container addComponent:self.window];
+    
+    //Add main controller into container
+    [self.container addComponent:[MainController class]];
+    
+    //Get main controller instance from container
+    UIViewController *mainController = 
+    	(UIViewController *)[self.container getComponent:[MainController class]];
+    
+    //place main controller view into window
+    [self.window addSubview:mainController.view];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+```
 
-1. Clone project somewhere with git://github.com/mivasi/Objective-IOC.git
+###Adding components into container
+There is many ways how to add components into container :
+####Add component as instance.
 
-2. Locate the "IOC.xcodeproj" file under "`src/`". Drag IOC.xcodeproj and
-   drop it onto the root of your Xcode project's "Groups and Files"  sidebar.  A dialog will
-   appear -- make sure "Copy items" is unchecked and "Reference Type" is "Relative to Project"
-   before clicking "Add".
+This is especialy useful when you want to add application delegate or window
 
-3. Now you need to link the MVIOC static libraries to your project.  Select IOC.xcodeproj that you just added to the sidebar.
-   Under the "Details" table, you will see libIOC.a and UnitTests.octest. Check the checkbox on the far right for each of
-   the libIOC.a file (not the UnitTests). This will link each part of the MVIOC framework to your app.
+```objective-c
+[container addComponent:instance]
+```
+####Add component as class.
 
-4. Now you need to add MVIOC as a dependency of your project, so Xcode compiles it whenever
-   you compile your project.  Expand the "Targets" section of the sidebar and double-click your
-   application's target.  Under the "General" tab you will see a "Direct Dependencies" section. 
-   Click the "+" button, select "IOC" and click "Add Target". You do *not* need to add the `UnitTests` target for each lib.
+```objective-c
+[container addComponent:[SomeClass class]]
+```
 
-5. Finally, we need to tell your project where to find the MVIOC headers.  Open your
-   "Project Settings" and go to the "Build" tab. Look for "Header Search Paths" and double-click
-   it.  Add the relative path from your project's directory to the "src/Classes/" directory.
+####Add component which represents some role.
 
-6. While you are in Project Settings, go to "Other Linker Flags" under the "Linker" section, and
-   add "-ObjC" and "-all_load" to the list of flags.
+This can be used when you have some protocol(role) and class(representer) which implement that protocol 
 
-7. You're ready to go.  Just #import "MVIOC/MVIOC.h" anywhere you want to use MVIOC classes
-   in your project.
-   
-   
-Inspiration in this how-to from Three20 project
+```objective-c
+[container addComponent:[SomeClass class] representing:@protocol(SomeProtocol)]
+```
+
+####Add component which should behave as singleton.
+
+That means it is created just one time, and then just reused.
+
+```objective-c
+[[self.container withCache] addComponent:[SomeClass class]]
+```
+
+####Add component with custom init method.
+Useful when you want to use <strong>interface builder</strong>
+
+```objective-c
+[[self.container withInitSelector:@selector(initWithNibName:bundle:) params:@"NextController", [NSBundle mainBundle], nil] addComponent:[NextController class]];
+```
+####Add component with explicitly defined dependencies.
+
+```objective-c
+`NSDictionary *deps = [NSDictionary dictionaryWithObjectsAndKeys:[SomeColaborator class], @"colaborator", nil];`
+[[self.container withDepsDictionary:deps] addComponent:[SomeClass class]];
+```
+###Getting components from container
+
+Components should be returned from container on entry points. For example in the <code>application:didFinishLaunchingWithOptions:</code> selector of application delegate can be used something like this:  
+```objective-c
+UIViewController *mainController = 
+	(UIViewController *)[self.container getComponent:[MainController class]];
+[self.window addSubview:mainController.view];
+```
+All other components should be created throught injection as colaborators. Ideal situation is just one usage of getComponent method of container.
+
+###Writing classes which can be placed into container
+
+Great emphasis is placed on creating classes as usual. Do not to force users of this framework to inherit some special abstract class or implement protocol. So, how to make it:</p>
+
+```objective-c
+//SomeController.h
+
+@interface SomeController : UIViewController {
+	//autowire injection
+    SomeAppDelegate *injAppDelegate;
+    SomeService *service;
+}
+//make it public and to allow injection
+@property(nonatomic, assign) SomeAppDelegate *appDelegate;
+@property(nonatomic, retain) SomeService *service;
+@property(nonatomic, retain) NextController *nextController;
+
+@end
+
+//SomeController.m
+
+@implementation MainController
+
+//inj prefix tell to container to use autowiring. So he lookup for 'SomeAppDelegate' component and inject it.
+@synthesize appDelegate = injAppDelegate;
+@synthesize service;
+//when we use dynamic we are saying to container that we want lazy load. So collaborator is created in time when we want to use it.
+@dynamic nextController;
+
+@end
+```
+
+####What we have seen here:
+
+#####Autowiring of components throught use of prefix 'inj' on instance variable member
+
+Autowiring is the most preferable style of wiring components together.  
+Container take a look at variable member type and ask container for component of this type. Type can be specified as some class or protocol
+
+#####Some service component which must be added in manualy
+
+```objective-c
+NSDictionary *deps = [NSDictionary dictionaryWithObjectsAndKeys:[SomeService class], @"service", nil];
+[[self.container withDepsDictionary:deps] addComponent:[SomeController class]];
+```
+
+As you can see, autowiring and explicitly added in components can be mixed togehter. Dictionaries keys are names of properties and values are components representers, which are in container.
+	
+#####Using of lazy loading feature
+
+By using <code>@dynamic property</code> Lazy load can use autowiring too.
+
+###Customization of Container
+
+####Injection types
+
+As default container uses property injection type when adding component. But there can be more injection types.  
+It is possible to say which type to use when adding component or it can be setted as default for all addings.
+
+#####Add component with explicitly setted injection type
+
+```objective-c
+[[container withInjectionType:someInjectionType] addComponent:[SomeClass class]]
+```
+#####Set some injection type which is used as default
+
+```objective-c
+container.injectionType = someInjectionType
+```
+
+#####Container now supports two injection types
+- Property injection type (default)
+- [[Factory injection type]]
+
+It is possible to write your own injection type. Just implement <code><MVIOCInjectionType></code> protocol and use it
+
+####Caching of components
+
+Caching of components is mainly used to simulate singleton behavior of components. As with injection types, there can be more caching strategies.  
+Framework now support just really easy caching which is in most cases good enough, but it is not thread safe. But other can be written, for example thread safe caching, or caching just in threads ...  
+How to use cache:
+
+```objective-c
+// using default cache strategy (not thread safe)
+[[container withCache] addComponent:[SomeClass class]]
+```
+
+## How to add library into your project
+- git clone git://github.com/mivasi/Objective-IOC.git
+- copy src/Classes into your project
+- include header where you need `#import "MVIOC.h"`
