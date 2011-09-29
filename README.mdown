@@ -79,12 +79,14 @@ Useful when you want to use <strong>interface builder</strong>
 ```
 ###Getting components from container
 
-Components should be returned from container on entry points. For example in the <code>application:didFinishLaunchingWithOptions:</code> selector of application delegate can be used something like this:  
+Components should be returned from container on entry points. For example in the <code>application:didFinishLaunchingWithOptions:</code> selector of application delegate can be used something like this:
+
 ```objective-c
 UIViewController *mainController = 
 	(UIViewController *)[self.container getComponent:[MainController class]];
 [self.window addSubview:mainController.view];
 ```
+
 All other components should be created throught injection as colaborators. Ideal situation is just one usage of getComponent method of container.
 
 ###Writing classes which can be placed into container
